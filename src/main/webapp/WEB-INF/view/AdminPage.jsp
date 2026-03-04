@@ -4,13 +4,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Santosh Hospital</title>
 <link rel="stylesheet" href="css-files/header.css">
 <link rel="stylesheet" href="css-files/footer.css">
 <link rel="stylesheet" href="css-files/adminPage.css" >
 </head>
 <body>
    <%@ include file="html-files/header.html" %>
+   
+      <!--  protecting from Unauthorized access -->
+   <%
+   if(session==null || session.getAttribute("admin")==null){
+	   response.sendRedirect("index.jsp");
+   }
+   String adminMsg=(String)session.getAttribute("admin");
+   %>
+   <h1><%=adminMsg %></h1>
+   
       
     <!-- Navigation Bar -->
     <div class="navbar">
@@ -20,19 +30,34 @@
         <h3 id="changePass">Change Admin Password</h3>
         <h3 id="changeAdm">Change Admin</h3>
     </div>
+    
 <main>
+<% String formType=(String)session.getAttribute("formType");
+    session.removeAttribute("formtype");
+   String msg=(String)session.getAttribute("statusMsg");
+   session.removeAttribute("statusMsg");
+%>
 
-   <div class="nn" id="doctorAddF" >
-        <form action="add_doctor_servlet" id="addDoctor" method="post" enctype="multipart/form-data">
+
+   <div  id="doctorAddF" 
+      <%if(formType!=null && "addDoctor".equals(formType)){ %>
+      class="fl"
+      <%}else{ %>
+      class="nn"
+      <%} %>  >
+        <form action="Admin_actions" id="addDoctor" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="formType" value="addDoctor">
+        
              <h1> Add Doctor</h1>
+             
              <% 
-             String msg=(String)request.getAttribute("msg");
              if(msg!=null){
               if(msg.equals("inserted")) {%>
              <p style="color :green"> Data Inserted</p>
              <%} else{%>
              <p style="color:red"> <%=msg %></p>
              <%} }%>
+            
            <table>
             <tr>
                 <th><label for="docName">name : </label></th>
@@ -91,22 +116,72 @@
 
    </div>
     
-    <div class="nn" id="doctorRemoveF">
-         <form action="">
+    <div  id="doctorRemoveF" 
+    <%if(formType!=null && "removeDoctor".equals(formType)){ %>
+      class="fl"
+      <%}else{ %>
+      class="nn"
+      <%} %>
+    >
+         <form action="Admin_actions" method="post">
+            <input type="hidden" name="formType" value="removeDoctor">
+            
+            <!-- printing response -->
+            <%
+             if(msg!=null){
+              if(msg.equals("positive")) {%>
+             <p style="color :green"> doctor removed successfully from database. </p>
+             <%} else{%>
+             <p style="color:red"> <%=msg %></p>
+             <%} }%>
+             
             <input type="number" placeholder="Enter doctor id">
             <input type="submit" value="Delete">
          </form>
     </div>
     
-    <div class="nn" id="changeAdminPass">
-         <form action="">
+    <div  id="changeAdminPass"
+    <%if(formType!=null && "changeAdminPass".equals(formType)){ %>
+      class="changePassword"
+      <%}else{ %>
+      class="nn"
+      <%} %>
+    >
+         <form action="Admin_actions" method="post">
+         
+             <input type="hidden" name="formType" value="changeAdminPass">
+             <!-- printing response -->
+            <%
+             if(msg!=null){
+              if(msg.equals("positive")) {%>
+             <p style="color :green"> password changed successfully</p>
+             <%} else{%>
+             <p style="color:red"> <%=msg %></p>
+             <%} }%>
+             
             <input type="text" placeholder="Enter new Password">
             <input type="submit" value="Change">
          </form>
     </div>
 
-    <div class="nn" id="changeAdmin">
-           <form action="" method="post">
+    <div  id="changeAdmin"
+    <%if(formType!=null && "changeAdmin".equals(formType)){ %>
+      class="fl"
+      <%}else{ %>
+      class="nn"
+      <%} %>
+    >
+           <form action="Admin_actions" method="post">
+           <input type="hidden" name="formType" value="changeAdmin">
+           <!-- printing response -->
+            <%
+             if(msg!=null){
+              if(msg.equals("positive")) {%>
+             <p style="color :green"> Admin changed successfully</p>
+             <%} else{%>
+             <p style="color:red"> <%=msg %></p>
+             <%} }%>
+            
             <h1>Admin Details</h1>
              <table>
                 <tr>

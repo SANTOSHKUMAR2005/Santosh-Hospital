@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.dao.AdminDAOImp;
@@ -17,12 +19,16 @@ public class AdminVerification extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String password=(String)request.getParameter("pass");
-//		System.out.println(password);
 		
 		AdminDAOImp adminDAOImp=new  AdminDAOImp();
 		
-		if(adminDAOImp.varifyAdmin(password)) {
-			request.getRequestDispatcher("/WEB-INF/view/AdminPage.jsp").forward(request, response);
+		if(password!=null && adminDAOImp.varifyAdmin(password)) {
+			HttpSession session = request.getSession();
+			session.setAttribute("admin","hello Mr. Admin");
+			//setting inactive duration for one day
+			session.setMaxInactiveInterval(60*24*60);
+			//get request to AdminDashbord Servlet
+			response.sendRedirect("AdminDashbord");
 		}else {
 			request.setAttribute("error", "*invalid password");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);

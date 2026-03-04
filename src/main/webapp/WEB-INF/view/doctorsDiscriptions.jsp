@@ -17,7 +17,7 @@
    <div id="homeDiv">
      <a href="index.jsp" style="color:white">Home</a>
      <% 
-     String dipartment= request.getParameter("docType"); 
+     String dipartment= (String)request.getAttribute("docType"); 
      %>
      <div id="docType"><h2><%= dipartment %></h2></div>
    </div>
