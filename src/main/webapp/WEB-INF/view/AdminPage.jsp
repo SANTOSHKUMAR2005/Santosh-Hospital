@@ -28,7 +28,7 @@
         <h3 id="AddDoc" >Add Doctor</h3>
         <h3 id="RemoveDoc">Remove Doctor</h3>
         <h3 id="changePass">Change Admin Password</h3>
-        <h3 id="changeAdm">Change Admin</h3>
+        <h3 id="addAdm">Add Admin</h3>
     </div>
     
 <main>
@@ -51,9 +51,9 @@
              <h1> Add Doctor</h1>
              
              <% 
-             if(msg!=null){
+             if(msg!=null && formType!=null && "addDoctor".equals(formType)){
               if(msg.equals("inserted")) {%>
-             <p style="color :green"> Data Inserted</p>
+             <p style="color :green">Doctor Data Inserted successfully.</p>
              <%} else{%>
              <p style="color:red"> <%=msg %></p>
              <%} }%>
@@ -128,14 +128,16 @@
             
             <!-- printing response -->
             <%
-             if(msg!=null){
-              if(msg.equals("positive")) {%>
+             if(msg!=null && formType!=null && "removeDoctor".equals(formType)){
+              if(msg.equals("deleted")) {%>
              <p style="color :green"> doctor removed successfully from database. </p>
              <%} else{%>
              <p style="color:red"> <%=msg %></p>
              <%} }%>
              
-            <input type="number" placeholder="Enter doctor id">
+            <input type="number" name="doctorId" placeholder="Enter doctor id" required 
+              oninvalid="this.setCustomValidity('please enter the doctor id first')" 
+              oninput="this.setCustomValidity('')">
             <input type="submit" value="Delete">
          </form>
     </div>
@@ -152,31 +154,34 @@
              <input type="hidden" name="formType" value="changeAdminPass">
              <!-- printing response -->
             <%
-             if(msg!=null){
-              if(msg.equals("positive")) {%>
+             if(msg!=null && formType!=null && "changeAdminPass".equals(formType)){
+              if(msg.equals("pass changed")) {%>
              <p style="color :green"> password changed successfully</p>
              <%} else{%>
              <p style="color:red"> <%=msg %></p>
              <%} }%>
              
-            <input type="text" placeholder="Enter new Password">
+            <input type="text" name="newPass" placeholder="Enter new Password" required 
+              oninvalid="this.setCustomValidity('please enter a new password first')" 
+              oninput="this.setCustomValidity('')">
+            
             <input type="submit" value="Change">
          </form>
     </div>
 
-    <div  id="changeAdmin"
-    <%if(formType!=null && "changeAdmin".equals(formType)){ %>
+    <div  id="addAdmin"
+    <%if(formType!=null && "addAdmin".equals(formType)){ %>
       class="fl"
       <%}else{ %>
       class="nn"
       <%} %>
     >
            <form action="Admin_actions" method="post">
-           <input type="hidden" name="formType" value="changeAdmin">
+           <input type="hidden" name="formType" value="addAdmin">
            <!-- printing response -->
             <%
-             if(msg!=null){
-              if(msg.equals("positive")) {%>
+             if(msg!=null && formType!=null && "changeAdmin".equals(formType)){
+              if(msg.equals("admin changed")) {%>
              <p style="color :green"> Admin changed successfully</p>
              <%} else{%>
              <p style="color:red"> <%=msg %></p>
@@ -186,18 +191,18 @@
              <table>
                 <tr>
                     <th><label for="AdminName">Name : </label></th>
-                    <td><input type="text" id="AdminName"></td>
+                    <td><input type="text" id="AdminName" name="AdminName" required="required"></td>
                 </tr>
                 <tr>
                     <th><label for="Password">Password : </label></th>
-                    <td><input id="Password" type="password"></td>
+                    <td><input id="Password" type="password" name="pass" required="required"></td>
                 </tr>
                 <tr>
                     <th><label for="phone">phone no. : </label></th>
-                    <td><input type="tel" id="phone"> </td>
+                    <td><input type="tel" id="phone" name="phone" > </td>
                 </tr>
              </table>
-                 <input type="submit" value="change">
+                 <input type="submit" value="Add">
            </form>
         
 

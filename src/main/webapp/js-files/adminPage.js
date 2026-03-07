@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 const doctorAdd=document.querySelector("#AddDoc");
 var RemoveDoc=document.querySelector('#RemoveDoc');
 var changePass=document.querySelector('#changePass');
-var changeAdm=document.querySelector('#changeAdm');
+var addAdm=document.querySelector('#addAdm');
+
 var doctorAddF=document.querySelector('#doctorAddF');
 var doctorRemoveF=document.querySelector('#doctorRemoveF');
 var changeAdminPass=document.querySelector('#changeAdminPass');
-var changeAdmin=document.querySelector('#changeAdmin');
+var addAdmin=document.querySelector('#addAdmin');
 
 doctorAdd.addEventListener('click',()=>{
 doctorAddF.classList.toggle('fl');
@@ -22,8 +23,8 @@ doctorRemoveF.classList.add('nn');
 changeAdminPass.classList.add('nn');
 changeAdminPass.classList.remove('changePassword');
 
-changeAdmin.classList.remove('fl');
-changeAdmin.classList.add('nn');
+addAdmin.classList.remove('fl');
+addAdmin.classList.add('nn');
 
 })
 
@@ -37,8 +38,8 @@ doctorAddF.classList.add('nn');
 changeAdminPass.classList.add('nn');
 changeAdminPass.classList.remove('changePassword');
 
-changeAdmin.classList.remove('fl');
-changeAdmin.classList.add('nn');
+addAdmin.classList.remove('fl');
+addAdmin.classList.add('nn');
 
 })
 
@@ -52,14 +53,14 @@ doctorAddF.classList.add('nn');
 doctorRemoveF.classList.remove('remove');
 doctorRemoveF.classList.add('nn');
 
-changeAdmin.classList.remove('fl');
-changeAdmin.classList.add('nn');
+addAdmin.classList.remove('fl');
+addAdmin.classList.add('nn');
 
 })
 
-changeAdm.addEventListener('click',()=>{
-changeAdmin.classList.toggle('fl');
-changeAdmin.classList.toggle('nn');
+addAdm.addEventListener('click',()=>{
+addAdmin.classList.toggle('fl');
+addAdmin.classList.toggle('nn');
 
 doctorAddF.classList.remove('fl');
 doctorAddF.classList.add('nn');

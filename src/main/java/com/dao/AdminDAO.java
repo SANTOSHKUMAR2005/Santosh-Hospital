@@ -1,10 +1,13 @@
 package com.dao;
 
+import com.dto.AdminDTO;
+import com.dto.DoctorDTO;
+
 public interface AdminDAO {
 	  void createAdminTable();
-      void setAdminPassword();
-      void setAdminName();
-      void changeName();
-      void changePassword();
-      boolean varifyAdmin(String password);
+	  String addAdmin(AdminDTO admindto);
+      String changeName(String newName);
+      String changePassword(String newPass);
+      String varifyAdmin(String password);
+      
 }

@@ -15,7 +15,7 @@ public class ValidateCridential {
     	 String name=dto.getDoctor_name().trim();
     	 if(name.length()<4) {
     		 return "Enter valied name and please Use 'Dr.' before the name";
-    	 }else if(!(name.substring(0, 3).toUpperCase() .equals("DR"))) {
+    	 }else if(!(name.substring(0, 2).toUpperCase().equals("DR"))) {
     		 return "please Use Dr. before the name";
     	 }
     	 

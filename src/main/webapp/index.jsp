@@ -18,7 +18,7 @@
     <div id="Admin">
        <h3>Admin</h3>
        <form action="admin_verification" method="post" >
-       <input type="password" placeholder="password" name="pass" id="pass"><br>
+       <input type="password" placeholder="password" name="pass" id="pass" required="required"><br>
        <% if(request.getAttribute("error")!=null){ %>
        <p  id="error" style="margin: 0px;font-size: 12px; color:red;"> *invalid password</p>
        <%} %>

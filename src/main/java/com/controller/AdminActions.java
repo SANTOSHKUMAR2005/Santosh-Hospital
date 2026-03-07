@@ -13,16 +13,18 @@ import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.dto.AdminDTO;
 import com.dto.DoctorDTO;
+import com.dao.AdminDAO;
+import com.dao.AdminDAOImp;
+import com.dao.HospitalDAOImp;
 
 import com.services.ValidateCridential;
 
-/**
- * Servlet implementation class AddDoctor
- */
+
 @WebServlet("/Admin_actions")
 @MultipartConfig(
-		//fileSizeThreshold = 1024*1024 //1mb
+		fileSizeThreshold = 1024*1024 //1mb
 		)
 public class AdminActions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,15 +35,18 @@ public class AdminActions extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String formType=(String)request.getParameter("formType");
 		HttpSession session=request.getSession(false);
+		String statusMsg=null;
+		
+		
 		
 		  if(formType.equals("addDoctor")) {
+			  HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
 		    DoctorDTO dto=new DoctorDTO();
             dto.setDoctor_name(request.getParameter("doctorName"));
             //extracting image data
             Part part = request.getPart("photo");
             InputStream is = part.getInputStream();
-            byte[] allBytes = is.readAllBytes();
-            dto.setPhoto_bytes(allBytes);
+            dto.setPhoto_inputStream(is);
   
             dto.setSpecialization(request.getParameter("specialization"));
             dto.setQualifications(request.getParameter("qualification"));
@@ -54,23 +59,36 @@ public class AdminActions extends HttpServlet {
             String s=ValidateCridential.ValidateDoctorDetails(dto);
             
             if(s.equals("valide")) {
-        	    //store the data into data base
-        	    session.setAttribute("statusMsg", "positive");
+        	    statusMsg=hospitalDAOImp.addDoctor(dto);
+        	    session.setAttribute("statusMsg",statusMsg);
             }else {
           	  session.setAttribute("statusMsg", s);
             }
 		  }
 		  else if(formType.equals("removeDoctor")) {
-			  session.setAttribute("statusMsg", "this form is for removing form");
+			  HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
+			  int doctorId =Integer.parseInt(request.getParameter("doctorId"));
+			  if(doctorId>0) {
+				  statusMsg=hospitalDAOImp.deleteDoctor(doctorId);
+				  session.setAttribute("statusMsg", statusMsg);
+			  }else {
+				  session.setAttribute("statusMsg", "please Enter the correct doctor Id.");
+			  }
 			  
 		  }
 		  else if(formType.equals("changeAdminPass")) {
-			  session.setAttribute("statusMsg", "this form is for changing password");
-			  
+			  AdminDAO adminDao=new AdminDAOImp();
+			  String newPass=(String)request.getParameter("newPass");
+			  statusMsg=adminDao.changePassword(newPass);
+			  session.setAttribute("statusMsg", statusMsg);
 		  }
-		  else if(formType.equals("changeAdmin")) {
-			  session.setAttribute("statusMsg", "this form is for changing admin.");
-			  
+		  else if(formType.equals("addAdmin")) {
+			  AdminDAO adminDao=new AdminDAOImp();
+			  String name= (String)request.getParameter("AdminName");
+			  String pass=(String)request.getParameter("pass");
+			  String phone=(String)request.getParameter("phone");
+			  statusMsg=adminDao.addAdmin(new AdminDTO(name,pass,phone));
+			  session.setAttribute("statusMsg", statusMsg);
 		  }
           
 		  session.setAttribute("formType", formType);

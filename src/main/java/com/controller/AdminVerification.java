@@ -19,12 +19,11 @@ public class AdminVerification extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String password=(String)request.getParameter("pass");
-		
 		AdminDAOImp adminDAOImp=new  AdminDAOImp();
-		
-		if(password!=null && adminDAOImp.varifyAdmin(password)) {
+		String username = adminDAOImp.varifyAdmin(password);
+		if(password!=null && username!=null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("admin","hello Mr. Admin");
+			session.setAttribute("admin","hello Mr. "+username);
 			//setting inactive duration for one day
 			session.setMaxInactiveInterval(60*24*60);
 			//get request to AdminDashbord Servlet

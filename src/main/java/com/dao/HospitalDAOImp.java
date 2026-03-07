@@ -17,7 +17,7 @@ public class HospitalDAOImp implements HospitalDAO{
 		String query="create table if not exists doctors ("
 				+ "doctor_id int unique not null primary key auto_increment, "
 				+ "doctor_name varchar(100) not null, "
-				+ "photo blob not null , "
+				+ "photo longblob not null , "
 				+ "specialization varchar(20) not null, "
 				+ "qualifications varchar(200) not null, "
 				+ "license_no varchar(50) not null unique, "
@@ -81,8 +81,10 @@ public class HospitalDAOImp implements HospitalDAO{
 	}
 
 	
+	@SuppressWarnings("finally")
 	@Override
-	public void addDoctor(DoctorDTO docDTO) {
+	public String addDoctor(DoctorDTO docDTO) {
+		String statusMsg=null;
 		Connection con=Connectionfactory.getConnection();
 		PreparedStatement ps=null;
 		String query="insert into doctors "
@@ -93,7 +95,7 @@ public class HospitalDAOImp implements HospitalDAO{
 		try {
 			ps=con.prepareStatement(query);
 			ps.setString(1, docDTO.getDoctor_name());
-			ps.setBytes(2, docDTO.getPhotoBytes());
+			ps.setBlob(2, docDTO.getPhoto_inputStream());
 			ps.setString(3, docDTO.getSpecialization());
 			ps.setString(4, docDTO.getQualifications());
 			ps.setString(5, docDTO.getLicense_no());
@@ -103,29 +105,57 @@ public class HospitalDAOImp implements HospitalDAO{
 			ps.setInt(9, docDTO.getConsultation_fee());
 			
 			int a=ps.executeUpdate();
-			if(a>0) {
-				System.out.println("doctor data inserted.");
-			}
+			
+			statusMsg=(a>0)?"inserted":"doctor data not inserted.";
+			
 			
 		} catch (SQLException e) {
-			System.out.println("doctor data not inserted.");
+			statusMsg=e.getMessage();
 			e.printStackTrace();
+		}finally {
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+			return statusMsg;
 		}
-		
-		Connectionfactory.close(ps);
-		Connectionfactory.close(con);
+	}
 
+	@SuppressWarnings("finally")
+	@Override
+	public String deleteDoctor(int doctorId) {
+	    String statusMsg=null;
+	    Connection con = Connectionfactory.getConnection();
+	    PreparedStatement ps=null;
+	    String query1="select doctor_id from doctors where doctor_id=?";
+	    String query2="delete from doctors where doctor_id=?";
+	    
+	    try {
+	    	ps=con.prepareStatement(query1);
+	    	ps.setInt(1, doctorId);
+	    	ResultSet rs = ps.executeQuery();
+	    	if(rs.next()) {
+	    		ps=con.prepareStatement(query2);
+	    		ps.setInt(1, doctorId);
+	    		int a=ps.executeUpdate();
+	    		statusMsg=(a>0)?"deleted":"deletion failed";
+	    		
+	    	}else {
+	    		statusMsg="doctor with provided id not exist";
+	    	}
+			
+		} catch (Exception e) {
+			statusMsg=e.getMessage();
+			e.printStackTrace();
+		}finally {
+			Connectionfactory.close(ps);
+		    Connectionfactory.close(con);
+			return statusMsg;
+		}
 	}
 
 	@Override
-	public void deleteDoctor() {
+	public String addClient() {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addClient() {
-		// TODO Auto-generated method stub
+		return null;
 		
 	}
 
