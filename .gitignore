@@ -1,8 +1,10 @@
-project.env
+#Environment file
+.env
 
+#Eclipse IDE files
 .classpath
 .project
 .settings
-hello.txt
 
+#Database config
 src/main/webapp/WEB-INF/config
