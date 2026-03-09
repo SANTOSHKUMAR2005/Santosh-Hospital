@@ -4,3 +4,5 @@ project.env
 .project
 .settings
 hello.txt
+
+src/main/webapp/WEB-INF/config

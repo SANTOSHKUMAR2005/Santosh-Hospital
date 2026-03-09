@@ -33,7 +33,7 @@
     
 <main>
 <% String formType=(String)session.getAttribute("formType");
-    session.removeAttribute("formtype");
+    session.removeAttribute("formType");
    String msg=(String)session.getAttribute("statusMsg");
    session.removeAttribute("statusMsg");
 %>
@@ -180,7 +180,7 @@
            <input type="hidden" name="formType" value="addAdmin">
            <!-- printing response -->
             <%
-             if(msg!=null && formType!=null && "changeAdmin".equals(formType)){
+             if(msg!=null && formType!=null && "addAdmin".equals(formType)){
               if(msg.equals("admin changed")) {%>
              <p style="color :green"> Admin changed successfully</p>
              <%} else{%>
