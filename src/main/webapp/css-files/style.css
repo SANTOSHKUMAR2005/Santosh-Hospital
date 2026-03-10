@@ -26,6 +26,13 @@ header {
 	width: 10%;
 	
 }
+#loginSpan{
+	position: absolute;
+	top:10%;
+	left:90%;
+	width: 10%;
+	color:white;
+}
 h3{
 	margin:0px;	
 }

@@ -25,8 +25,16 @@
        <input type="submit">
        </form>
     </div>
+    
+ 
 </header>
-
+  <span id="loginSpan">
+  <%if(session==null || session.getAttribute("username")==null){ %>
+   <h3> <a href="login">login</a></h3>
+   <%}else{ %>
+   <h3> <%=session.getAttribute("username") %></h3>
+   <%} %>
+  </span>
 <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
@@ -35,17 +43,17 @@
 </nav>
 
  <div id="doctorTypes" style="display:none">
-        <a href="doctor_Type_Handlor?type=Dernatologists"> Dermatologists</a>
-        <a href="doctor_Type_Handlor?type=Cardiologists"> Cardiologists </a>
-        <a href="doctor_Type_Handlor?type=Oncologists"> Oncologists</a>
-        <a href="doctor_Type_Handlor?type=Neurologists"> Neurologists</a>
-        <a href="doctor_Type_Handlor?type=Endocrirologists"> Endocrinologists</a>
-        <a href="doctor_Type_Handlor?type=Gastoenterologist"> Gastoenterologist</a>
-        <a href="doctor_Type_Handlor?type=Ophthatnologist"> Ophthalmologist</a>
-        <a href="doctor_Type_Handlor?type=Psychiatrist"> Psychiatrist</a>
-        <a href="doctor_Type_Handlor?type=Pulmonologist"> Pulmonologist</a>
-        <a href="doctor_Type_Handlor?type=Rheumatologist"> Rheumatologist</a>
-        <a href="doctor_Type_Handlor?type=Urologist"> Urologist</a>
+        <a href="related_doctors?type=Dermatologists">Dermatologist</a>
+        <a href="related_doctors?type=Cardiologists">Cardiologists </a>
+        <a href="related_doctors?type=Oncologist">Oncologist</a>
+        <a href="related_doctors?type=Neurologist">Neurologist</a>
+        <a href="related_doctors?type=Endocrinologist">Endocrinologist</a>
+        <a href="related_doctors?type=Gastornterologist">Gastornterologist</a>
+        <a href="related_doctors?type=Ophthalmologist">Ophthalmologist</a>
+        <a href="related_doctors?type=Psychiatrist">Psychiatrist</a>
+        <a href="related_doctors?type=Pulmonologist">Pulmonologist</a>
+        <a href="related_doctors?type=Rheumatologist">Rheumatologist</a>
+        <a href="related_doctors?type=Urologist">Urologist</a>
         
     </div>
 

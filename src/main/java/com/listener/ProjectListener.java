@@ -15,6 +15,7 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
+
 @WebListener
 public class ProjectListener implements ServletContextListener{
 	
@@ -48,7 +49,7 @@ public class ProjectListener implements ServletContextListener{
     	//creating table
     	HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
 //    	hospitalDAOImp.createDoctorsTable();
-//    	hospitalDAOImp.createPatientTable();
+//    	hospitalDAOImp.createClientTable();
     	
     	AdminDAO adminDAO=new AdminDAOImp();
 //    	adminDAO.createAdminTable();

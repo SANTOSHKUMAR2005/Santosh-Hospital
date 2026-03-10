@@ -5,9 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 
-
+import com.dto.DocBasicInfo;
 import com.dto.DoctorDTO;
 
 public class HospitalDAOImp implements HospitalDAO{
@@ -40,22 +43,21 @@ public class HospitalDAOImp implements HospitalDAO{
 		} catch (SQLException e) {
 			System.out.println("dotors table creation failed.");
 			e.printStackTrace();
+		}finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(statement);
+			Connectionfactory.close(con);
 		}
-		
-		Connectionfactory.close(rs);
-		Connectionfactory.close(statement);
-		Connectionfactory.close(con);
 		
 	}
 
 	@Override
-	public void createPatientTable() {
-		String query="create table if not exists patients ("
-				+ "patient_id int unique not null primary key auto_increment, "
-				+ "patient_name varchar(100) not null, "
-				+ "phone_no varchar(15) not null, "
-				+ "doctor_id int not null, "
-				+ "appointment_date datetime not null"
+	public void createClientTable() {
+		String query="create table if not exists Clients ("
+				+ "client_id int unique not null primary key auto_increment, "
+				+ "client_username varchar(100) not null unique, "
+				+ "password varchar(100) not null ,"
+				+ "client_phone varchar(15) not null, "
 				+ ");";
 		
 		Connection con=Connectionfactory.getConnection();
@@ -66,22 +68,23 @@ public class HospitalDAOImp implements HospitalDAO{
 			 statement = con.createStatement();
 			 int a=statement.executeUpdate(query);
 			if(a>0)
-			System.out.println("patients table created.");
+			System.out.println("Clients table created.");
 			
 		} catch (SQLException e) {
-			System.out.println("patients table creation failed.");
+			System.out.println("Clients table creation failed.");
 			e.printStackTrace();
 		}
+		finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(statement);
+			Connectionfactory.close(con);
+		}
 		
-		Connectionfactory.close(rs);
-		Connectionfactory.close(statement);
-		Connectionfactory.close(con);
 		
 		
 	}
 
 	
-	@SuppressWarnings("finally")
 	@Override
 	public String addDoctor(DoctorDTO docDTO) {
 		String statusMsg=null;
@@ -115,11 +118,11 @@ public class HospitalDAOImp implements HospitalDAO{
 		}finally {
 			Connectionfactory.close(ps);
 			Connectionfactory.close(con);
-			return statusMsg;
 		}
+		return statusMsg;
 	}
 
-	@SuppressWarnings("finally")
+
 	@Override
 	public String deleteDoctor(int doctorId) {
 	    String statusMsg=null;
@@ -148,14 +151,51 @@ public class HospitalDAOImp implements HospitalDAO{
 		}finally {
 			Connectionfactory.close(ps);
 		    Connectionfactory.close(con);
-			return statusMsg;
 		}
+	    return statusMsg;
 	}
 
 	@Override
-	public String addClient() {
-		// TODO Auto-generated method stub
+	public String bookAppointment() {
+		
 		return null;
+		
+	}
+
+	@Override
+	public ArrayList<DocBasicInfo> getRelatedDoctors(String doctorType) {
+		String query="select doctor_id , doctor_name , qualifications from doctors "
+				+ "where specialization=?";
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		CachedRowSet cachedRowSet=null;
+		ArrayList<DocBasicInfo> doctors=new ArrayList<>();
+		
+		try {
+			ps=con.prepareStatement(query);
+			ps.setString(1, doctorType);
+			rs=ps.executeQuery();
+		    cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
+	        cachedRowSet.populate(rs);
+	        while(cachedRowSet.next()) {
+	         DocBasicInfo newDoc=new DocBasicInfo();
+	         newDoc.setDoctor_id(cachedRowSet.getInt("doctor_id"));
+	         newDoc.setDoctor_name(cachedRowSet.getString("doctor_name"));
+	         newDoc.setQualifications(cachedRowSet.getString("qualifications"));
+	         doctors.add(newDoc);
+	        }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			Connectionfactory.close(cachedRowSet);
+			Connectionfactory.close(rs);
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		
+		return doctors;
 		
 	}
 

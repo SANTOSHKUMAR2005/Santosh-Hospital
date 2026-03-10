@@ -45,12 +45,15 @@ margin:2px 0px;
   margin-bottom: 3px;
 }
 #photo{
+  position:relative;
   height: 60px;
   width: 60px;
   border-radius: 50%;
   background-color: aqua;
   margin-right: 3px;
+  
 }
+
 span{
   padding-top: 20px;
 }

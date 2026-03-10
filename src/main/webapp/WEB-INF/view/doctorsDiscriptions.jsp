@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dto.DocBasicInfo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,6 +20,7 @@
      <a href="index.jsp" style="color:white">Home</a>
      <% 
      String dipartment= (String)request.getAttribute("docType"); 
+     ArrayList<DocBasicInfo> doctors=(ArrayList<DocBasicInfo>)request.getAttribute("doctors");
      %>
      <div id="docType"><h2><%= dipartment %></h2></div>
    </div>
@@ -25,19 +28,21 @@
   <main>
    <div id="mainDiv">
    <%
-     for(int i=1;i<=5;i++){
+     for(DocBasicInfo doctor :doctors){
    %>
      <div id="cart">
        <div >
-       <div id="photo"></div>
-       <span>
-          <h2 id="docNane" >Dr. Santosh Kumar</h2>
-       </span>
+         <div id="photo">
+           <img id="profilePic"  alt="img" src="image?id=<%=doctor.getDoctor_id()%>" 
+           style="height:100%; width:100%; border-radius:50% ; object-fit:cover">  
+         </div>
+         <span>
+            <h2 id="docNane" ><%=doctor.getDoctor_name()%></h2>
+         </span>
        </div>
        <div id="discription">
-        <pre>helfkjfj h   rh pihfpih rh iruhf hr fpyvdfqepf per
-             fh fahf perye qrehf ehf pr 
-             ger puq erfp  erf aj fl erer</pre>
+        <pre><%=doctor.getQualifications() %>
+        <pre>
        </div>
        <div id="btn">
            <button type="submit">Book Appointment</button>

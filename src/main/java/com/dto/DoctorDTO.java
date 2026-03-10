@@ -1,8 +1,10 @@
 package com.dto;
 
 import java.io.InputStream;
+import java.sql.Blob;
 
 public class DoctorDTO {
+	private int doctor_id;
      private String doctor_name;
      private InputStream photo_inputStream;
      private String specialization;
@@ -28,6 +30,14 @@ public class DoctorDTO {
     	    this.salary=salary;
     	    this.consultation_fee=consultation_fee;
      }
+     
+     
+	 public int getDoctor_id() {
+		return doctor_id;
+	}
+	 public void setDoctor_id(int doctor_id) {
+		 this.doctor_id = doctor_id;
+	 }
 	 public String getDoctor_name() {
 		 return doctor_name;
 	 }
@@ -37,8 +47,8 @@ public class DoctorDTO {
 	 public InputStream getPhoto_inputStream() {
 		 return photo_inputStream;
 	 }
-	 public void setPhoto_inputStream(InputStream photo_inputStream) {
-		 this.photo_inputStream = photo_inputStream;
+	 public void setPhoto_inputStream(InputStream blob) {
+		 this.photo_inputStream =  blob;
 	 }
 	 public String getSpecialization() {
 		 return specialization;
@@ -81,6 +91,13 @@ public class DoctorDTO {
 	 }
 	 public void setConsultation_fee(int consultation_fee) {
 		 this.consultation_fee = consultation_fee;
+	 }
+	 @Override
+	 public String toString() {
+		return "DoctorDTO [doctor_id=" + doctor_id + ", doctor_name=" + doctor_name + ", photo_inputStream="
+				+ photo_inputStream + ", specialization=" + specialization + ", qualifications=" + qualifications
+				+ ", license_no=" + license_no + ", phone_no=" + phone_no + ", cabin_no=" + cabin_no + ", salary="
+				+ salary + ", consultation_fee=" + consultation_fee + "]";
 	 }
      
      

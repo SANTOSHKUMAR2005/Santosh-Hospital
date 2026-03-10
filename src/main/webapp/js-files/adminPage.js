@@ -2,11 +2,11 @@
  * 
  */
 document.addEventListener('DOMContentLoaded',()=>{
-    
 const doctorAdd=document.querySelector("#AddDoc");
 var RemoveDoc=document.querySelector('#RemoveDoc');
 var changePass=document.querySelector('#changePass');
 var addAdm=document.querySelector('#addAdm');
+
 
 var doctorAddF=document.querySelector('#doctorAddF');
 var doctorRemoveF=document.querySelector('#doctorRemoveF');
@@ -59,6 +59,7 @@ addAdmin.classList.add('nn');
 })
 
 addAdm.addEventListener('click',()=>{
+	
 addAdmin.classList.toggle('fl');
 addAdmin.classList.toggle('nn');
 
