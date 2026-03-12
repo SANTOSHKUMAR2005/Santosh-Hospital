@@ -8,41 +8,38 @@
 <title>Santosh Hospital</title>
 </head>
 <body class="fl">
-	<div id="Signup" class="nn">
+	<div id="Signup"  class="fl">
+	    <%if(session!=null && session.getAttribute("StatusMsg")!=null){ %>
+	     <h3><%=session.getAttribute("StatusMsg") %></h3>
+	     <%} %>
 		<form class="fl" action="Signup" method="post">
 			<table>
 				<tr>
 					<th><label for="username">Username : </label></th>
-					<td><input type="text" id="username" required></td>
+					<td><input type="text" id="username" name="username" required></td>
 				</tr>
 				<tr>
 					<th><label for="phoneNo">Phone no. : </label></th>
-					<td><input type="tel" name="" id="phoneNo" required></td>
+					<td><input type="tel" name="phone" id="phoneNo" required></td>
+					<td><button id="sendOTP" type="button" data-action="sendOTP" >send OTP</button>
+					 <span id="timer" class="nn"></span></td>
 				</tr>
-
-				<button id="sendOTP" onclick="sendOTP()">send OTP</button>
 				
-				<div id="OTPSction" class="nn">
-					<tr>
+				
+					<tr id="OTPSection" class="nn">
 						<th><label for="otp">OTP : </label></th>
 						<td><input type="number" id="otp"></td>
+						<td><button type="button" data-action="verifyOTP">Verify OTP</button><td>
 					</tr>
-					<button onclick="verifyOTP()">Verify OTP</button>
-				</div>
-				
-				<div id="passwordSection" class="nn">
-					<tr>
+					
+					<tr  class="nn" id="passwordSection">
 						<th><label for="pass">Password : </label></th>
-						<td><input type="text" id="pass"></td>
-					</tr>
-					<tr>
-						<th><label for="confirmPass">Confirm Password : </label></th>
-						<td><input type="text" id="confirmPass"></td>
-					</tr>
-				</div>
+						<td><input type="password" id="pass" name="password" required="required"></td>
+					</tr>				
 			</table>
-			<input type="submit" value="Sign-up">
+			<input id="signInButton" class="nn" type="submit" value="Sign-In">
 		</form>
+		<span style="margin-top: 20px">if you have an account : <a href="login">login</a></span>
 	</div>
 	<script type="text/javascript" src="js-files/signup.js"></script>
 

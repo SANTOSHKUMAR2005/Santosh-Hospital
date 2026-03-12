@@ -45,7 +45,7 @@
         <pre>
        </div>
        <div id="btn">
-           <button type="submit">Book Appointment</button>
+           <button type="button"><a href="">Book Appointment</a></button>
        </div>
        
     </div>

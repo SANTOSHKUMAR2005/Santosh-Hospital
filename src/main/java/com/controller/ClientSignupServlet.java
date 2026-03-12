@@ -5,7 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+
+import com.dao.HospitalDAO;
+import com.dao.HospitalDAOImp;
+import com.dto.ClientDTO;
 
 /**
  * Servlet implementation class ClientSignupServlet
@@ -22,8 +28,25 @@ public class ClientSignupServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String username=request.getParameter("username");
+		String phone=request.getParameter("phone");
+		String password=request.getParameter("password");
+		
+		ClientDTO client=new ClientDTO(username , password , phone);
+		
+		HospitalDAO hospitalDao=new HospitalDAOImp();
+		String StatusMsg=hospitalDao.addClient(client);
+		HttpSession session = request.getSession();
+		
+		if(StatusMsg.equals("successful")) {
+			session.setAttribute("StatusMsg", "you are successfully signed in : login now");
+			response.sendRedirect("login");
+		}else {
+			session.setAttribute("StatusMsg", StatusMsg);
+			response.sendRedirect("Signup");
+		}
+		
+		
 	}
 
 }

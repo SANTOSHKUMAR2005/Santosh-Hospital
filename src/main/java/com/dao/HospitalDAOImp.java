@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 
+import com.dto.ClientDTO;
 import com.dto.DocBasicInfo;
 import com.dto.DoctorDTO;
 
@@ -154,7 +155,65 @@ public class HospitalDAOImp implements HospitalDAO{
 		}
 	    return statusMsg;
 	}
+	
+	@Override
+	public String addClient(ClientDTO clientInfo) {
+		String statusMsg=null;
+		Connection con=Connectionfactory.getConnection();
+		PreparedStatement ps=null;
+		String query="insert into Clients value(?,?,?);";
+		
+	
+		try {
+			ps=con.prepareStatement(query);
+			ps.setString(1, clientInfo.getClient_Username());
+			ps.setString(2, clientInfo.getPassword());
+			ps.setString(3, clientInfo.getClient_Phone());
+			
+			int a=ps.executeUpdate();
+			
+			statusMsg=(a>0)?"successful":"Sign-up failed.";
+			
+			
+		} catch (SQLException e) {
+			statusMsg=e.getMessage();
+			e.printStackTrace();
+		}finally {
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		return statusMsg;
+	}
 
+	@Override
+	public String verifyClient(String username, String password) {
+		String statusMsg=null;
+		Connection con=Connectionfactory.getConnection();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String query="selecte client_id from Clients where client_username=? and password=?";
+		
+	
+		try {
+			ps=con.prepareStatement(query);
+			ps.setString(1,username);
+			ps.setString(2, password);
+	
+			
+			 rs=ps.executeQuery();
+			 statusMsg= rs.next()? "verified":"user not found";
+	
+		} catch (SQLException e) {
+			statusMsg=e.getMessage();
+			e.printStackTrace();
+		}finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		return statusMsg;
+	}
+	
 	@Override
 	public String bookAppointment() {
 		
@@ -202,3 +261,7 @@ public class HospitalDAOImp implements HospitalDAO{
 	
 
 }
+
+	
+
+

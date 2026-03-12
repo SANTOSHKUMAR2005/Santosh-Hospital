@@ -5,7 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.sql.ResultSet;
+
+import com.dao.HospitalDAO;
+import com.dao.HospitalDAOImp;
 
 /**
  * Servlet implementation class ClientLoginServlet
@@ -22,8 +28,23 @@ public class ClientLoginServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String username=request.getParameter("username").trim();
+		String password=request.getParameter("password").trim();
+		
+		HospitalDAO hospitalDAO=new HospitalDAOImp();
+		String verifyStatus= hospitalDAO.verifyClient(username, password);
+		HttpSession session = request.getSession();
+		
+		if(verifyStatus!=null && verifyStatus.equals("verified")) {
+		 session.setAttribute("username", username);
+		 response.sendRedirect("index.jsp");
+		}
+		else {
+			session.setAttribute("StatusMsg",verifyStatus);
+			response.sendRedirect("login");
+		}
+		
+		
 	}
 
 }
