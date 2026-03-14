@@ -1,5 +1,9 @@
 
 footer {
+	position:absolute;
+	top:100%;
+	translate:0 -100%;
+	width:98%;
     background: #0077b6;
     color: white;
     text-align: center;

@@ -21,16 +21,17 @@ public class AdminVerification extends HttpServlet {
 		String password=(String)request.getParameter("pass");
 		AdminDAOImp adminDAOImp=new  AdminDAOImp();
 		String username = adminDAOImp.varifyAdmin(password);
+		HttpSession session = request.getSession();
+		
 		if(password!=null && username!=null) {
-			HttpSession session = request.getSession();
 			session.setAttribute("admin","hello Mr. "+username);
 			//setting inactive duration for one day
 			session.setMaxInactiveInterval(60*24*60);
 			//get request to AdminDashbord Servlet
 			response.sendRedirect("AdminDashbord");
 		}else {
-			request.setAttribute("error", "*invalid password");
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			session.setAttribute("StatusMsg", "*invalid password");
+			response.sendRedirect("home");
 		}
 		
 	}

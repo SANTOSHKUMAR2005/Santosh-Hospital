@@ -9,22 +9,23 @@
 <link rel="stylesheet" href="css-files/doctorsDiscription.css?v=2">
 <link rel="stylesheet" href="css-files/header.css?v=2">
 <link rel="stylesheet" href="css-files/footer.css?v=2">
+<link rel="stylesheet" href="css-files/message.css">
 <title>Santosh Hospital</title>
 </head>
 <body>
-
-
-	<%@include file="html-files/header.html"%>
-
-	<%
+    
+    <%
 	if (session != null && session.getAttribute("StatusMsg") != null) {
 	%>
-	<h2 style="color: red"><%=session.getAttribute("StatusMsg")%></h2>
+	<%@include file="html-files/message.html"%>
 	<%
 	session.removeAttribute("StatusMsg");
 	}
 	%>
-    
+
+	<%@include file="html-files/header.html"%>
+
+	
 	<div id="homeDiv">
 		<a href="index.jsp" style="color: white">Home</a>
 		<% if(session==null || session.getAttribute("doctors")==null){
@@ -79,6 +80,7 @@
    -->
 
 	<%@ include file="html-files/footer.html"%>
+	<script type="text/javascript" src="js-files/massege.js"></script>
 
 </body>
 </html>

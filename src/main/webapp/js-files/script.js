@@ -51,15 +51,5 @@ doctorTypes.addEventListener("mouseleave", () => {
 });
 
 
-const error=document.querySelector("#error");
-const pass=document.querySelector("#pass");
-pass.addEventListener("click",()=>{
-	
-	error.style.display="none";
-});
-
-setTimeout(()=>{
-	error.style.display="none";
-},5000)
 
 

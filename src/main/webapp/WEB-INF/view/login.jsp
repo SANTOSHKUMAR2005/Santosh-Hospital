@@ -6,15 +6,22 @@
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="css-files/login.css">
+<link rel="stylesheet" href="css-files/message.css">
 
 <title>Santosh Hospital</title>
 </head>
-<body class="fl">
+<body >
+    <%
+	if (session != null && session.getAttribute("StatusMsg") != null) {
+	%>
+	<%@include file="html-files/message.html"%>
+	<%
+	session.removeAttribute("StatusMsg");
+	}
+	%>
+	<div class="fl" style="height: 100vh; width: 98vw">
 
 		<div class="fl" id="login">
-            <%if(session!=null && session.getAttribute("StatusMsg")!=null){ %>
-	     <h3><%=session.getAttribute("StatusMsg") %></h3>
-	     <%session.removeAttribute("StatusMsg");} %>
 			<form class="fl" action="login" method="post">
 				<table>
 					<tr>
@@ -31,5 +38,7 @@
 
 			<span style="margin-top: 20px">if you have not an account : <a href="Signup">Sign-up</a></span>
 		</div>
+	</div>
+		<script type="text/javascript" src="js-files/massege.js"></script>
 </body>
 </html>

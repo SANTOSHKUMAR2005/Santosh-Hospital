@@ -5,13 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css-files/signup.css">
+<link rel="stylesheet" href="css-files/message.css">
 <title>Santosh Hospital</title>
 </head>
-<body class="fl">
+<body >
+
+	<div id="notificationBox" class="nn">
+      <span id="closeBtn">X</span>
+      <p id="notificationMsg"></p>
+    </div>
+	
+	
+	<div class="fl" style="height: 100vh; width: 98vw">
+	
 	<div id="Signup"  class="fl">
-	    <%if(session!=null && session.getAttribute("StatusMsg")!=null){ %>
-	     <h3><%=session.getAttribute("StatusMsg") %></h3>
-	     <% session.removeAttribute("StatusMsg");} %>
+	    
 		<form class="fl"  >
 			<table>
 				<tr>
@@ -44,6 +52,7 @@
 			<button id="signInButton" class="nn" type="button" data-action="SignIn">Sign-In</button>
 		</form>
 		<span style="margin-top: 20px">if you have an account : <a href="login">login</a></span>
+	</div>
 	</div>
 	<script type="text/javascript" src="js-files/signup.js"></script>
 

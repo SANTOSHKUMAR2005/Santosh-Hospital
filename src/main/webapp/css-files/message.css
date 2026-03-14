@@ -1,0 +1,32 @@
+.notificationBox{
+    position: absolute;
+    left: 50%;
+    translate:-50%;
+    min-width: 300px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: rgb(36, 147, 106);
+    animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+    from{
+        transform: translateY(-70px);
+    }
+    to{
+        transform: translateY(20px);
+    }
+    
+}
+
+#closeBtn{
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: red;
+}
+#closeBtn:hover{
+    
+    transform: scale(1.5);
+
+}
