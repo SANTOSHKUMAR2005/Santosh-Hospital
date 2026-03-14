@@ -1,10 +1,13 @@
 package com.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.sql.rowset.CachedRowSet;
@@ -14,90 +17,95 @@ import com.dto.ClientDTO;
 import com.dto.DocBasicInfo;
 import com.dto.DoctorDTO;
 
-public class HospitalDAOImp implements HospitalDAO{
+public class HospitalDAOImp implements HospitalDAO {
 
 	@Override
-	public  void createDoctorsTable() {
-		String query="create table if not exists doctors ("
-				+ "doctor_id int unique not null primary key auto_increment, "
-				+ "doctor_name varchar(100) not null, "
-				+ "photo longblob not null , "
-				+ "specialization varchar(20) not null, "
-				+ "qualifications varchar(200) not null, "
-				+ "license_no varchar(50) not null unique, "
-				+ "phone_no varchar(15) not null unique, "
-				+ "cabin_no int not null, "
-				+ "salary int not null, "
-				+ "consultation_fee int not null"
-				+ ");";
-		
-		Connection con=Connectionfactory.getConnection();
-		Statement statement=null;
-		ResultSet rs=null;
-		try  {
-			   
-			 statement = con.createStatement();
-			 int a=statement.executeUpdate(query);
-			if(a>0)
-			System.out.println("dotors table created.");
-			
+	public void createDoctorsTable() {
+		String query = "create table if not exists doctors ("
+				+ "doctor_id int unique not null primary key auto_increment, " + "doctor_name varchar(100) not null, "
+				+ "photo longblob not null , " + "specialization varchar(20) not null, "
+				+ "qualifications varchar(200) not null, " + "license_no varchar(50) not null unique, "
+				+ "phone_no varchar(15) not null unique, " + "cabin_no int not null, " + "salary int not null, "
+				+ "consultation_fee int not null" + ");";
+
+		Connection con = Connectionfactory.getConnection();
+		Statement statement = null;
+		try {
+
+			statement = con.createStatement();
+			int a = statement.executeUpdate(query);
+			if (a > 0)
+				System.out.println("dotors table created.");
+
 		} catch (SQLException e) {
 			System.out.println("dotors table creation failed.");
 			e.printStackTrace();
-		}finally {
-			Connectionfactory.close(rs);
+		} finally {
 			Connectionfactory.close(statement);
 			Connectionfactory.close(con);
 		}
-		
+
 	}
 
 	@Override
 	public void createClientTable() {
-		String query="create table if not exists Clients ("
+		String query = "create table if not exists Clients ("
 				+ "client_id int unique not null primary key auto_increment, "
-				+ "client_username varchar(100) not null unique, "
-				+ "password varchar(100) not null ,"
-				+ "client_phone varchar(15) not null, "
-				+ ");";
-		
-		Connection con=Connectionfactory.getConnection();
-		Statement statement=null;
-		ResultSet rs=null;
-		try  {
-			   
-			 statement = con.createStatement();
-			 int a=statement.executeUpdate(query);
-			if(a>0)
-			System.out.println("Clients table created.");
-			
+				+ "client_username varchar(100) not null unique, " + "password varchar(100) not null ,"
+				+ "client_phone varchar(15) not null " + ");";
+
+		Connection con = Connectionfactory.getConnection();
+		Statement statement = null;
+		try {
+
+			statement = con.createStatement();
+			int a = statement.executeUpdate(query);
+			if (a > 0)
+				System.out.println("Clients table created.");
+
 		} catch (SQLException e) {
 			System.out.println("Clients table creation failed.");
 			e.printStackTrace();
-		}
-		finally {
-			Connectionfactory.close(rs);
+		} finally {
 			Connectionfactory.close(statement);
 			Connectionfactory.close(con);
 		}
-		
-		
-		
 	}
 
-	
+	@Override
+	public void createAppointmentTable() {
+		String query = "create table if not exists Appointments ( " + "appointment_id int primary key auto_increment , "
+				+ "patient_username varchar(100) not null , " + "doctor_id int not null , "
+				+ "booking_date date not null , " + "appointment_date date not null" + ");";
+		Connection con = Connectionfactory.getConnection();
+		Statement statement = null;
+
+		try {
+			statement = con.createStatement();
+			int a = statement.executeUpdate(query);
+			if (a > 0)
+				System.out.println("Appointment table created");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Appointment table creation failed");
+		} finally {
+			Connectionfactory.close(statement);
+			Connectionfactory.close(con);
+		}
+
+	}
+
 	@Override
 	public String addDoctor(DoctorDTO docDTO) {
-		String statusMsg=null;
-		Connection con=Connectionfactory.getConnection();
-		PreparedStatement ps=null;
-		String query="insert into doctors "
+		String statusMsg = null;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		String query = "insert into doctors "
 				+ "(doctor_name , photo , specialization, qualifications, license_no, phone_no, cabin_no, salary, consultation_fee)"
-				+ "values"
-				+ "(?,?,?,?,?,?,?,?,?);";
-	
+				+ "values" + "(?,?,?,?,?,?,?,?,?);";
+
 		try {
-			ps=con.prepareStatement(query);
+			ps = con.prepareStatement(query);
 			ps.setString(1, docDTO.getDoctor_name());
 			ps.setBlob(2, docDTO.getPhoto_inputStream());
 			ps.setString(3, docDTO.getSpecialization());
@@ -107,161 +115,222 @@ public class HospitalDAOImp implements HospitalDAO{
 			ps.setInt(7, docDTO.getCabin_no());
 			ps.setInt(8, docDTO.getSalary());
 			ps.setInt(9, docDTO.getConsultation_fee());
-			
-			int a=ps.executeUpdate();
-			
-			statusMsg=(a>0)?"inserted":"doctor data not inserted.";
-			
-			
+
+			int a = ps.executeUpdate();
+
+			statusMsg = (a > 0) ? "inserted" : "doctor data not inserted.";
+
 		} catch (SQLException e) {
-			statusMsg=e.getMessage();
+			statusMsg = e.getMessage();
 			e.printStackTrace();
-		}finally {
+		} finally {
 			Connectionfactory.close(ps);
 			Connectionfactory.close(con);
 		}
 		return statusMsg;
 	}
-
 
 	@Override
 	public String deleteDoctor(int doctorId) {
-	    String statusMsg=null;
-	    Connection con = Connectionfactory.getConnection();
-	    PreparedStatement ps=null;
-	    String query1="select doctor_id from doctors where doctor_id=?";
-	    String query2="delete from doctors where doctor_id=?";
-	    
-	    try {
-	    	ps=con.prepareStatement(query1);
-	    	ps.setInt(1, doctorId);
-	    	ResultSet rs = ps.executeQuery();
-	    	if(rs.next()) {
-	    		ps=con.prepareStatement(query2);
-	    		ps.setInt(1, doctorId);
-	    		int a=ps.executeUpdate();
-	    		statusMsg=(a>0)?"deleted":"deletion failed";
-	    		
-	    	}else {
-	    		statusMsg="doctor with provided id not exist";
-	    	}
-			
-		} catch (Exception e) {
-			statusMsg=e.getMessage();
-			e.printStackTrace();
-		}finally {
-			Connectionfactory.close(ps);
-		    Connectionfactory.close(con);
-		}
-	    return statusMsg;
-	}
-	
-	@Override
-	public String addClient(ClientDTO clientInfo) {
-		String statusMsg=null;
-		Connection con=Connectionfactory.getConnection();
-		PreparedStatement ps=null;
-		String query="insert into Clients value(?,?,?);";
-		
-	
+		String statusMsg = null;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		String query1 = "select doctor_id from doctors where doctor_id=?";
+		String query2 = "delete from doctors where doctor_id=?";
+
 		try {
-			ps=con.prepareStatement(query);
-			ps.setString(1, clientInfo.getClient_Username());
-			ps.setString(2, clientInfo.getPassword());
-			ps.setString(3, clientInfo.getClient_Phone());
-			
-			int a=ps.executeUpdate();
-			
-			statusMsg=(a>0)?"successful":"Sign-up failed.";
-			
-			
-		} catch (SQLException e) {
-			statusMsg=e.getMessage();
+			ps = con.prepareStatement(query1);
+			ps.setInt(1, doctorId);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				ps = con.prepareStatement(query2);
+				ps.setInt(1, doctorId);
+				int a = ps.executeUpdate();
+				statusMsg = (a > 0) ? "deleted" : "deletion failed";
+
+			} else {
+				statusMsg = "doctor with provided id not exist";
+			}
+
+		} catch (Exception e) {
+			statusMsg = e.getMessage();
 			e.printStackTrace();
-		}finally {
+		} finally {
 			Connectionfactory.close(ps);
 			Connectionfactory.close(con);
 		}
 		return statusMsg;
+	}
+
+	@Override
+	public String addClient(ClientDTO clientInfo) {
+		String statusMsg = null;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		String query = "insert into Clients " + "(client_username , password , client_phone) " + "value(?,?,?);";
+
+		try {
+			ps = con.prepareStatement(query);
+			ps.setString(1, clientInfo.getClient_Username());
+			ps.setString(2, clientInfo.getPassword());
+			ps.setString(3, clientInfo.getClient_Phone());
+
+			int a = ps.executeUpdate();
+
+			statusMsg = (a > 0) ? "successful" : "Sign-up failed.";
+
+		} catch (SQLException e) {
+			statusMsg = e.getMessage();
+			e.printStackTrace();
+		} finally {
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		return statusMsg;
+	}
+
+	@Override
+	public String usernameAvailbility(String username) {
+		String StatusMsg = null;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = "select client_username from Clients where client_username=? ;";
+
+		try {
+			ps = con.prepareStatement(query);
+			ps.setString(1, username);
+
+			rs = ps.executeQuery();
+			if (rs.next())
+				StatusMsg = "not availble";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		return StatusMsg;
 	}
 
 	@Override
 	public String verifyClient(String username, String password) {
-		String statusMsg=null;
-		Connection con=Connectionfactory.getConnection();
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		String query="selecte client_id from Clients where client_username=? and password=?";
-		
-	
+		String statusMsg = null;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = "select client_id from Clients where client_username=? and password=? ;";
+
 		try {
-			ps=con.prepareStatement(query);
-			ps.setString(1,username);
+			ps = con.prepareStatement(query);
+			ps.setString(1, username);
 			ps.setString(2, password);
-	
-			
-			 rs=ps.executeQuery();
-			 statusMsg= rs.next()? "verified":"user not found";
-	
+
+			rs = ps.executeQuery();
+			statusMsg = rs.next() ? "verified" : "user not found";
+
 		} catch (SQLException e) {
-			statusMsg=e.getMessage();
+			statusMsg = "enternal error";
 			e.printStackTrace();
-		}finally {
+		} finally {
 			Connectionfactory.close(rs);
 			Connectionfactory.close(ps);
 			Connectionfactory.close(con);
 		}
 		return statusMsg;
 	}
-	
+
 	@Override
-	public String bookAppointment() {
-		
-		return null;
-		
+	public String bookAppointment(String username, int doctorId) {
+
+		String StatusMsg = "";
+		String query1 = "select appointment_date , count(*) as totalAppointment from Appointments "
+				+ "where appointment_date in " + "(select max(appointment_date) from Appointments where doctor_id=?) "
+				+ "group by appointment_date ;";
+
+		String query2 = "insert into Appointments (patient_username , doctor_id , booking_date, appointment_date) "
+				+ "value (?,?,?,?);";
+
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Date appointmentDate;
+		try {
+			ps = con.prepareStatement(query1);
+			ps.setInt(1, doctorId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				appointmentDate = rs.getDate("appointment_date");
+				int totalAppointment = rs.getInt("totalAppointment");
+				if (totalAppointment >= 15) {
+					appointmentDate = Date.valueOf(appointmentDate.toLocalDate().plusDays(1));
+				}
+			} else {
+				appointmentDate = Date.valueOf(LocalDate.now().plusDays(1));
+			}
+
+			Date booking_date = Date.valueOf(LocalDate.now());
+			ps = con.prepareStatement(query2, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, username);
+			ps.setInt(2, doctorId);
+			ps.setDate(3, booking_date);
+			ps.setDate(4, appointmentDate);
+
+			int a = ps.executeUpdate();
+			rs=ps.getGeneratedKeys();
+			if (rs.next())
+				StatusMsg = "your Appointment is booked successfully.\n Appointment Id : "+rs.getInt(1)+" (plese note it) \n  Appointment Date : "+ appointmentDate.toLocalDate();
+
+		} catch (Exception e) {
+			StatusMsg = "Appointment booking failed due to some internal problem .";
+			e.printStackTrace();
+		} finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+
+		return StatusMsg;
+
 	}
 
 	@Override
 	public ArrayList<DocBasicInfo> getRelatedDoctors(String doctorType) {
-		String query="select doctor_id , doctor_name , qualifications from doctors "
-				+ "where specialization=?";
+		String query = "select doctor_id , doctor_name , qualifications from doctors " + "where specialization=?";
 		Connection con = Connectionfactory.getConnection();
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		CachedRowSet cachedRowSet=null;
-		ArrayList<DocBasicInfo> doctors=new ArrayList<>();
-		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		CachedRowSet cachedRowSet = null;
+		ArrayList<DocBasicInfo> doctors = new ArrayList<>();
+
 		try {
-			ps=con.prepareStatement(query);
+			ps = con.prepareStatement(query);
 			ps.setString(1, doctorType);
-			rs=ps.executeQuery();
-		    cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
-	        cachedRowSet.populate(rs);
-	        while(cachedRowSet.next()) {
-	         DocBasicInfo newDoc=new DocBasicInfo();
-	         newDoc.setDoctor_id(cachedRowSet.getInt("doctor_id"));
-	         newDoc.setDoctor_name(cachedRowSet.getString("doctor_name"));
-	         newDoc.setQualifications(cachedRowSet.getString("qualifications"));
-	         doctors.add(newDoc);
-	        }
-			
+			rs = ps.executeQuery();
+			cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
+			cachedRowSet.populate(rs);
+			while (cachedRowSet.next()) {
+				DocBasicInfo newDoc = new DocBasicInfo();
+				newDoc.setDoctor_id(cachedRowSet.getInt("doctor_id"));
+				newDoc.setDoctor_name(cachedRowSet.getString("doctor_name"));
+				newDoc.setQualifications(cachedRowSet.getString("qualifications"));
+				doctors.add(newDoc);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			Connectionfactory.close(cachedRowSet);
 			Connectionfactory.close(rs);
 			Connectionfactory.close(ps);
 			Connectionfactory.close(con);
 		}
-		
+
 		return doctors;
-		
+
 	}
 
-	
-
 }
-
-	
-
-

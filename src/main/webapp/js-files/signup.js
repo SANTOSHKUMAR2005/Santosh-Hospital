@@ -19,6 +19,7 @@ function runTimer(){
 const actions={
 	sendOTP: sendOTP,
 	verifyOTP: verifyOTP,
+	SignIn: SignIn
 };
 
 document.addEventListener('click',(e)=>{
@@ -51,7 +52,7 @@ function sendOTP(e){
 				  runTimer();
 				  timer.classList.remove('nn');
 				}else{
-					alert("OTP generation failed please resend OTP");
+					alert(data);
 					documen.querySelector('#sendOTP').style.display="inline";
 				}
 			}) 
@@ -79,7 +80,8 @@ function verifyOTP(){
 				timer.classList.add('nn');
 				
 				document.querySelector('#OTPSection').classList.add('nn');
-				document.querySelector('#passwordSection').classList.remove('nn');
+				document.querySelector('#passwordSection1').classList.remove('nn');
+				document.querySelector('#passwordSection2').classList.remove('nn');
 				document.querySelector('#signInButton').classList.remove('nn');	
 			}else{
 				alert(data);
@@ -91,5 +93,38 @@ function verifyOTP(){
 	}	
 }
 
-
+function SignIn(){
+	const password=document.querySelector('#pass').value.trim();
+	const confirmPass=document.querySelector('#Cpass').value.trim();
+	if(password.length<6){
+		alert("password should have at least 6 digit");
+		return;
+	}
+	if(confirmPass!=password){
+		alert("password mis-match");
+		return;
+	}
+	
+	let username=document.querySelector('#username');
+    let phone=document.querySelector("#phoneNo");
+	username.disabled=false;
+	phone.disabled=false;
+	
+	username=username.value.trim();
+	phone=phone.value.trim();
+	
+	fetch("Signup",{
+		method:"post",
+		headers:{"Content-type":"application/x-www-form-urlencoded"},
+		body:"username="+username+"&password="+password+"&phone="+phone
+	}).then(res=>res.text()).then(data=>{
+		if(data=="successful"){
+		   alert("you have singned up successfylly : login now");
+		   window.location.href="login";
+		}else{
+			alert(data);
+		}
+	})
+	
+}
 

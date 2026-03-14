@@ -14,7 +14,7 @@
 		<div class="fl" id="login">
             <%if(session!=null && session.getAttribute("StatusMsg")!=null){ %>
 	     <h3><%=session.getAttribute("StatusMsg") %></h3>
-	     <%} %>
+	     <%session.removeAttribute("StatusMsg");} %>
 			<form class="fl" action="login" method="post">
 				<table>
 					<tr>

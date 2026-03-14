@@ -42,6 +42,7 @@ public class VerifyOTPServlet extends HttpServlet {
 			session.removeAttribute("otp");
 			session.removeAttribute("otpTime");
 			
+			
 			response.setContentType("text/plain");
 			response.getWriter().print("verified");
 		}else {

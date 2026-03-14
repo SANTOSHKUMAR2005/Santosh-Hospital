@@ -28,6 +28,9 @@ public class ClientSignupServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
 		String username=request.getParameter("username");
 		String phone=request.getParameter("phone");
 		String password=request.getParameter("password");
@@ -36,15 +39,8 @@ public class ClientSignupServlet extends HttpServlet {
 		
 		HospitalDAO hospitalDao=new HospitalDAOImp();
 		String StatusMsg=hospitalDao.addClient(client);
-		HttpSession session = request.getSession();
 		
-		if(StatusMsg.equals("successful")) {
-			session.setAttribute("StatusMsg", "you are successfully signed in : login now");
-			response.sendRedirect("login");
-		}else {
-			session.setAttribute("StatusMsg", StatusMsg);
-			response.sendRedirect("Signup");
-		}
+		response.getWriter().print(StatusMsg);
 		
 		
 	}

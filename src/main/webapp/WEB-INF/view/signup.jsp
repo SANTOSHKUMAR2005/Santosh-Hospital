@@ -11,8 +11,8 @@
 	<div id="Signup"  class="fl">
 	    <%if(session!=null && session.getAttribute("StatusMsg")!=null){ %>
 	     <h3><%=session.getAttribute("StatusMsg") %></h3>
-	     <%} %>
-		<form class="fl" action="Signup" method="post">
+	     <% session.removeAttribute("StatusMsg");} %>
+		<form class="fl"  >
 			<table>
 				<tr>
 					<th><label for="username">Username : </label></th>
@@ -32,12 +32,16 @@
 						<td><button type="button" data-action="verifyOTP">Verify OTP</button><td>
 					</tr>
 					
-					<tr  class="nn" id="passwordSection">
+					<tr  class="nn" id="passwordSection1">
 						<th><label for="pass">Password : </label></th>
-						<td><input type="password" id="pass" name="password" required="required"></td>
-					</tr>				
+						<td><input type="password" id="pass" name="password" required="required" placeholder="minimum 6 digit"></td>
+					</tr>	
+					<tr  class="nn" id="passwordSection2">
+						<th><label for="Cpass">Confirm Password : </label></th>
+						<td><input type="password" id="Cpass"  required="required"></td>
+					</tr>			
 			</table>
-			<input id="signInButton" class="nn" type="submit" value="Sign-In">
+			<button id="signInButton" class="nn" type="button" data-action="SignIn">Sign-In</button>
 		</form>
 		<span style="margin-top: 20px">if you have an account : <a href="login">login</a></span>
 	</div>

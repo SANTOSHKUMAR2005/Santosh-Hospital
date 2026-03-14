@@ -50,6 +50,7 @@ public class ProjectListener implements ServletContextListener{
     	HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
 //    	hospitalDAOImp.createDoctorsTable();
 //    	hospitalDAOImp.createClientTable();
+    	hospitalDAOImp.createAppointmentTable();
     	
     	AdminDAO adminDAO=new AdminDAOImp();
 //    	adminDAO.createAdminTable();

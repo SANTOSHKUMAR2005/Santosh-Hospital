@@ -19,32 +19,33 @@ import com.dao.HospitalDAOImp;
 @WebServlet("/login")
 public class ClientLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
-        
+
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String username = request.getParameter("username").trim();
+		String password = request.getParameter("password").trim();
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=request.getParameter("username").trim();
-		String password=request.getParameter("password").trim();
-		
-		HospitalDAO hospitalDAO=new HospitalDAOImp();
-		String verifyStatus= hospitalDAO.verifyClient(username, password);
+		HospitalDAO hospitalDAO = new HospitalDAOImp();
+		String verifyStatus = hospitalDAO.verifyClient(username, password);
 		HttpSession session = request.getSession();
-		
-		if(verifyStatus!=null && verifyStatus.equals("verified")) {
-		 session.setAttribute("username", username);
-		 response.sendRedirect("index.jsp");
-		}
-		else {
-			session.setAttribute("StatusMsg",verifyStatus);
+
+		if (verifyStatus != null && verifyStatus.equals("verified")) {
+			session.setAttribute("username", username);
+			response.sendRedirect("index.jsp");
+			
+
+		} else {
+			session.setAttribute("StatusMsg", verifyStatus);
 			response.sendRedirect("login");
 		}
-		
-		
+
 	}
 
 }
