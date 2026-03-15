@@ -22,7 +22,6 @@ public class ProjectListener implements ServletContextListener{
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 	    Connectionfactory.closeDataSource();
-		System.out.println("connectionFactory closed");
 	}
 	
     @Override
@@ -56,12 +55,13 @@ public class ProjectListener implements ServletContextListener{
     	
     	//creating table
     	HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
-//    	hospitalDAOImp.createDoctorsTable();
-//    	hospitalDAOImp.createClientTable();
+    	hospitalDAOImp.createDoctorsTable();
+    	hospitalDAOImp.createClientTable();
     	hospitalDAOImp.createAppointmentTable();
     	
     	AdminDAO adminDAO=new AdminDAOImp();
-//    	adminDAO.createAdminTable();
+    	adminDAO.createAdminTable();
+    	
     	
    }
 
