@@ -26,17 +26,17 @@
 	<!--  protecting from Unauthorized access -->
 	<%
 	if (session == null || session.getAttribute("admin") == null) {
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("home");
 	}
-	String adminMsg = (String) session.getAttribute("admin");
+	String admin = (String) session.getAttribute("admin");
 	%>
-	<h1><%=adminMsg%></h1>
+	<h1 style="margin-left: 10px"><%=admin%></h1>
 
 
 	<!-- Navigation Bar -->
 	<div class="navbar">
 		<h3 id="home">
-			<a href="index.jsp" style="color: white">Home</a>
+			<a href="home" style="color: white">Home</a>
 		</h3>
 		<h3 id="AddDoc">Add Doctor</h3>
 		<h3 id="RemoveDoc">Remove Doctor</h3>
@@ -48,34 +48,17 @@
 		<%
 		String formType = (String) session.getAttribute("formType");
 		session.removeAttribute("formType");
-		String msg = (String) session.getAttribute("statusMsg");
-		session.removeAttribute("statusMsg");
 		%>
 
 
 		<div id="doctorAddF"
-			<%if (formType != null && "addDoctor".equals(formType)) {%> class="fl"
-			<%} else {%> class="nn" <%}%>>
+			<%if (formType != null && "addDoctor".equals(formType)) {%>
+			class="fl" <%} else {%> class="nn" <%}%>>
 			<form action="Admin_actions" id="addDoctor" method="post"
 				enctype="multipart/form-data">
 				<input type="hidden" name="formType" value="addDoctor">
 
 				<h1>Add Doctor</h1>
-
-				<%
-				if (msg != null && formType != null && "addDoctor".equals(formType)) {
-					if (msg.equals("inserted")) {
-				%>
-				<p style="color: green">Doctor Data Inserted successfully.</p>
-				<%
-				} else {
-				%>
-				<p style="color: red">
-					<%=msg%></p>
-				<%
-				}
-				}
-				%>
 
 				<table>
 					<tr>
@@ -148,25 +131,8 @@
 			class="fl" <%} else {%> class="nn" <%}%>>
 			<form action="Admin_actions" method="post">
 				<input type="hidden" name="formType" value="removeDoctor">
-
-				<!-- printing response -->
-				<%
-				if (msg != null && formType != null && "removeDoctor".equals(formType)) {
-					if (msg.equals("deleted")) {
-				%>
-				<p style="color: green">doctor removed successfully from
-					database.</p>
-				<%
-				} else {
-				%>
-				<p style="color: red">
-					<%=msg%></p>
-				<%
-				}
-				}
-				%>
-
-				<input type="number" name="doctorId" placeholder="Enter doctor id"
+				 <input
+					type="number" name="doctorId" placeholder="Enter doctor id"
 					required
 					oninvalid="this.setCustomValidity('please enter the doctor id first')"
 					oninput="this.setCustomValidity('')"> <input type="submit"
@@ -180,21 +146,7 @@
 			<form action="Admin_actions" method="post">
 
 				<input type="hidden" name="formType" value="changeAdminPass">
-				<!-- printing response -->
-				<%
-				if (msg != null && formType != null && "changeAdminPass".equals(formType)) {
-					if (msg.equals("pass changed")) {
-				%>
-				<p style="color: green">password changed successfully</p>
-				<%
-				} else {
-				%>
-				<p style="color: red">
-					<%=msg%></p>
-				<%
-				}
-				}
-				%>
+
 
 				<input type="text" name="newPass" placeholder="Enter new Password"
 					required
@@ -209,21 +161,6 @@
 			<%} else {%> class="nn" <%}%>>
 			<form action="Admin_actions" method="post">
 				<input type="hidden" name="formType" value="addAdmin">
-				<!-- printing response -->
-				<%
-				if (msg != null && formType != null && "addAdmin".equals(formType)) {
-					if (msg.equals("admin changed")) {
-				%>
-				<p style="color: green">Admin changed successfully</p>
-				<%
-				} else {
-				%>
-				<p style="color: red">
-					<%=msg%></p>
-				<%
-				}
-				}
-				%>
 
 				<h1>Admin Details</h1>
 				<table>

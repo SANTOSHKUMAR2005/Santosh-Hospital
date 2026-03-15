@@ -18,9 +18,12 @@ public class AdminVerification extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String password=(String)request.getParameter("pass");
+		
 		AdminDAOImp adminDAOImp=new  AdminDAOImp();
 		String username = adminDAOImp.varifyAdmin(password);
+		
 		HttpSession session = request.getSession();
 		
 		if(password!=null && username!=null) {

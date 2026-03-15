@@ -30,3 +30,9 @@
     transform: scale(1.5);
 
 }
+
+@media (max-width : 700px){
+	.notificationBox{
+	width:80vw;
+	}
+}

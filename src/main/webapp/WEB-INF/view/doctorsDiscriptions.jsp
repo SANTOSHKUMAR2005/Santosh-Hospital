@@ -27,9 +27,9 @@
 
 	
 	<div id="homeDiv">
-		<a href="index.jsp" style="color: white">Home</a>
+		<a href="home" style="color: white">Home</a>
 		<% if(session==null || session.getAttribute("doctors")==null){
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("home");
 			}
 		String dipartment = (String) session.getAttribute("docType");
 		ArrayList<DocBasicInfo> doctors = (ArrayList<DocBasicInfo>) session.getAttribute("doctors");

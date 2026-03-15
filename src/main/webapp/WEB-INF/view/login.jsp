@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" href="css-files/login.css">
+  <link rel="stylesheet" href="css-files/login.css"> 
 <link rel="stylesheet" href="css-files/message.css">
 
 <title>Santosh Hospital</title>
@@ -19,7 +19,7 @@
 	session.removeAttribute("StatusMsg");
 	}
 	%>
-	<div class="fl" style="height: 100vh; width: 98vw">
+	<div class="fl" id="mainDiv">
 
 		<div class="fl" id="login">
 			<form class="fl" action="login" method="post">

@@ -1,6 +1,5 @@
 package com.dto;
 
-import java.time.LocalDateTime;
 
 public class ClientDTO {
 	private int client_id;

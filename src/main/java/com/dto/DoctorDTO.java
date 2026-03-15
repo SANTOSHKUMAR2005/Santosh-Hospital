@@ -1,7 +1,6 @@
 package com.dto;
 
 import java.io.InputStream;
-import java.sql.Blob;
 
 public class DoctorDTO {
 	private int doctor_id;

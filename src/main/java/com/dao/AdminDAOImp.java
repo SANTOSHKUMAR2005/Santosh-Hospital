@@ -22,10 +22,10 @@ public class AdminDAOImp implements AdminDAO{
 		try {
 			   statement=con.createStatement();
 			   statement.executeUpdate(query);
-			   System.out.println("Admin table created.");
+			 
 			
 		} catch (Exception e) {
-			System.out.println("Admin table creation failed.");
+
 			e.printStackTrace();
 		}
 		Connectionfactory.close(statement);

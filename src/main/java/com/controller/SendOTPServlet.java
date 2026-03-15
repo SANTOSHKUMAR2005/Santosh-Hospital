@@ -52,7 +52,6 @@ public class SendOTPServlet extends HttpServlet {
 			session.setAttribute("otpTime", System.currentTimeMillis());
 			System.out.println(otp);
 			response.setContentType("text/plain");
-			;
 			response.getWriter().print("send");
 		} else {
 			response.getWriter().print("failed to send OTP. Please try Again");

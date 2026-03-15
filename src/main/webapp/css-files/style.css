@@ -1,13 +1,14 @@
 * {
-	
     box-sizing: border-box;
 }
 
+	
+	
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f4f9ff;
-    width:98vw;
+    width:100vw;
 }
 
 /* Header */
@@ -16,20 +17,24 @@ header {
     color: white;
     text-align: center;
     padding: 20px;   
+    position: relative;
+   
     
 }
 #Admin{
 	display: inline;
 	position: absolute;
-	top:10%;
+	top:50%;
 	left:3%;
+	translate:0 -50%;
 	width: 10%;
 	
 }
 #loginSpan{
 	position: absolute;
-	top:10%;
-	left:90%;
+	top:50%;
+	right:5%;
+	translate:0 -50%;
 	width: 10%;
 	color:white;
 }
@@ -120,9 +125,14 @@ footer {
 
 /* 📱 Mobile Responsive Design */
 @media (max-width: 768px) {
+	
+	*{
+	margin:0px;
+	padding:0px;
+	}
      
      #pass{
-     width:140%;
+     width:100px;
      }
      
     nav {

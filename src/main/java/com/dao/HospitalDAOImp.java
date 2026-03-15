@@ -34,11 +34,9 @@ public class HospitalDAOImp implements HospitalDAO {
 
 			statement = con.createStatement();
 			int a = statement.executeUpdate(query);
-			if (a > 0)
-				System.out.println("dotors table created.");
 
 		} catch (SQLException e) {
-			System.out.println("dotors table creation failed.");
+		
 			e.printStackTrace();
 		} finally {
 			Connectionfactory.close(statement);
@@ -60,11 +58,9 @@ public class HospitalDAOImp implements HospitalDAO {
 
 			statement = con.createStatement();
 			int a = statement.executeUpdate(query);
-			if (a > 0)
-				System.out.println("Clients table created.");
+			
 
 		} catch (SQLException e) {
-			System.out.println("Clients table creation failed.");
 			e.printStackTrace();
 		} finally {
 			Connectionfactory.close(statement);
@@ -82,12 +78,11 @@ public class HospitalDAOImp implements HospitalDAO {
 
 		try {
 			statement = con.createStatement();
-			int a = statement.executeUpdate(query);
-			if (a > 0)
-				System.out.println("Appointment table created");
+			statement.executeUpdate(query);
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Appointment table creation failed");
+			
 		} finally {
 			Connectionfactory.close(statement);
 			Connectionfactory.close(con);

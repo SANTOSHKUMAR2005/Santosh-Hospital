@@ -1,21 +1,33 @@
 @charset "UTF-8";
-
-.fl{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content:center;
-}
-.mainDiv{
-    height: 100vh;
-    width: 98vw;
-}
-#login{
-    height: auto;
-    width: 50vw;
-    background-color: rgb(60, 78, 78);
-    padding: 50px 10px;
-    border-radius: 10px;
+body{
+	height:100vh;
+	width:100vw;
+	overflow: hidden;
 }
 
+.fl {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
 
+#mainDiv {
+	height: 100vh;
+	width: 98vw;
+}
+
+#login {
+	height: auto;
+	width: 50vw;
+	background-color: rgb(60, 78, 78);
+	padding: 50px 10px;
+	border-radius: 10px;
+}
+
+@media ( max-width : 640px) {
+	#login {
+		height: 70vh;
+		width: 80vw;
+	}
+}

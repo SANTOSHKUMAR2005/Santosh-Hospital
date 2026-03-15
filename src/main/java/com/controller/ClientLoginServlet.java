@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.ResultSet;
+
 
 import com.dao.HospitalDAO;
 import com.dao.HospitalDAOImp;

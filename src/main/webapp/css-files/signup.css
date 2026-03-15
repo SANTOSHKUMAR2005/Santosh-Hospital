@@ -20,3 +20,9 @@ body{
 .nn{
 	display:none;
 }
+
+@media ( max-width : 680px) {
+	#Signup {
+		width: 90vw;
+	}
+}

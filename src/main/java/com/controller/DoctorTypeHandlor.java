@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import com.dao.HospitalDAOImp;
 import com.dto.DocBasicInfo;
-import com.dto.DoctorDTO;
+
 
 @WebServlet("/related_doctors")
 public class DoctorTypeHandlor extends HttpServlet {

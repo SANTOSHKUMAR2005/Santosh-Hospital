@@ -60,9 +60,9 @@ public class AdminActions extends HttpServlet {
             
             if(s.equals("valide")) {
         	    statusMsg=hospitalDAOImp.addDoctor(dto);
-        	    session.setAttribute("statusMsg",statusMsg);
+        	    session.setAttribute("StatusMsg",statusMsg);
             }else {
-          	  session.setAttribute("statusMsg", s);
+          	  session.setAttribute("StatusMsg", s);
             }
 		  }
 		  else if(formType.equals("removeDoctor")) {
@@ -70,9 +70,9 @@ public class AdminActions extends HttpServlet {
 			  int doctorId =Integer.parseInt(request.getParameter("doctorId"));
 			  if(doctorId>0) {
 				  statusMsg=hospitalDAOImp.deleteDoctor(doctorId);
-				  session.setAttribute("statusMsg", statusMsg);
+				  session.setAttribute("StatusMsg", statusMsg);
 			  }else {
-				  session.setAttribute("statusMsg", "please Enter the correct doctor Id.");
+				  session.setAttribute("StatusMsg", "please Enter the correct doctor Id.");
 			  }
 			  
 		  }
@@ -80,7 +80,7 @@ public class AdminActions extends HttpServlet {
 			  AdminDAO adminDao=new AdminDAOImp();
 			  String newPass=(String)request.getParameter("newPass");
 			  statusMsg=adminDao.changePassword(newPass);
-			  session.setAttribute("statusMsg", statusMsg);
+			  session.setAttribute("StatusMsg", statusMsg);
 		  }
 		  else if(formType.equals("addAdmin")) {
 			  AdminDAO adminDao=new AdminDAOImp();
@@ -88,7 +88,7 @@ public class AdminActions extends HttpServlet {
 			  String pass=(String)request.getParameter("pass");
 			  String phone=(String)request.getParameter("phone");
 			  statusMsg=adminDao.addAdmin(new AdminDTO(name,pass,phone));
-			  session.setAttribute("statusMsg", statusMsg);
+			  session.setAttribute("StatusMsg", statusMsg);
 		  }
           
 		  session.setAttribute("formType", formType);

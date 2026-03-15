@@ -30,7 +30,7 @@ public class VerifyOTPServlet extends HttpServlet {
 		
 		long otpTime=(Long)session.getAttribute("otpTime");
 	   long currentTime = System.currentTimeMillis();
-	   if((currentTime-otpTime)>300000) {
+	   if((currentTime-otpTime)>150000) {
 		   response.getWriter().print("OTP expired");
 		   return;
 	   }

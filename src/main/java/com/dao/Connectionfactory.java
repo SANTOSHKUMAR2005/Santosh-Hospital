@@ -25,9 +25,8 @@ public class Connectionfactory {
 			config.setMaximumPoolSize(500);
 			dataSource=new HikariDataSource(config);
 			
-			System.out.println("connection pool initialized");
 		} catch (Exception e) {
-			System.out.println("connection pool not initialized");
+		
 			e.printStackTrace();
 		}
 	}
