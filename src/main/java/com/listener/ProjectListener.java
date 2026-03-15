@@ -28,23 +28,31 @@ public class ProjectListener implements ServletContextListener{
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 	     //database parameter
+
     	try {
-    	ServletContext servletContext = sce.getServletContext();
+        	ServletContext servletContext = sce.getServletContext();
+        	
+        	InputStream IS = servletContext.getResourceAsStream("/WEB-INF/config/Config.properties");
+        	Properties properties=new Properties();
+        	properties.load(IS);
+        	
+        	String driver=(String)properties.get("db_driver");
+        	String url=(String)properties.get("db_url");
+        	String user=(String)properties.get("db_username");
+        	String pass=(String)properties.get("db_password");
+        		
+        	Connectionfactory.init(driver,url,user,pass);
+     
+        	}catch(IOException e) {
+        		e.printStackTrace();
+        	}
     	
-    	InputStream IS = servletContext.getResourceAsStream("/WEB-INF/config/Config.properties");
-    	Properties properties=new Properties();
-    	properties.load(IS);
+//		String driver=System.getenv("db_driver");
+//    	String url=System.getenv("db_url");
+//    	String user=System.getenv("db_username");
+//    	String pass=System.getenv("db_password");
+//    	Connectionfactory.init(driver,url,user,pass);
     	
-    	String driver=(String)properties.get("db_driver");
-    	String url=(String)properties.get("db_url");
-    	String user=(String)properties.get("db_username");
-    	String pass=(String)properties.get("db_password");
-    	
-    	Connectionfactory.init(driver,url,user,pass);
- 
-    	}catch(IOException e) {
-    		e.printStackTrace();
-    	}
     	
     	//creating table
     	HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
