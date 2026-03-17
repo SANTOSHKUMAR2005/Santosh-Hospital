@@ -59,20 +59,22 @@ public class AdminDAOImp implements AdminDAO{
 	}	
 
 	@Override
-	public String varifyAdmin(String password) {
+	public String varifyAdmin(String username , String password, String phone) {
 		  
-		String query="select AdminName from Admin where pass=? ;";
+		String query="select AdminName from Admin where AdminName=? and pass=? and phone_number=? ;";
 		
 		Connection con=Connectionfactory.getConnection();
 		PreparedStatement ps=null;
 		ResultSet resultSet=null;
 		try {
 			ps=con.prepareStatement(query);
-			ps.setString(1, password);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, phone);
 		    resultSet = ps.executeQuery();
 			
 			if(resultSet.next()) {
-				return resultSet.getString("AdminName");
+				return "valied";
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,7 +84,7 @@ public class AdminDAOImp implements AdminDAO{
 		Connectionfactory.close(ps);
 		Connectionfactory.close(con);
 		}
-		return null;
+		return "Invalied";
 	}
 	
 	

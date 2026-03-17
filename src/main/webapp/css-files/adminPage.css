@@ -1,14 +1,36 @@
  @charset "UTF-8";
- 
- body{
- overflow:hidden;
+ *{
  margin: 0px;
  padding: 0px;
+ box-sizing: border-box;
+ overflow-x:hidden; 
  }
+ 
+ body{
+ width:100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+ }
+ 
+ #menuIcon{
+    position: absolute;
+    margin: 5px;
+    right: 5px;
+    top:25px;
+    display: none;
+    
+ }
+ 
+ #menuIcon:hover{
+ cursor: pointer;
+ }
+ 
   /* Navbar */
         .navbar {
             background-color: #2c3e50;
             padding: 15px;
+            width:100%;
             display: flex;
             justify-content: center;
         }
@@ -24,13 +46,14 @@
         .navbar h3:hover {
             color: #1abc9c;
             cursor: pointer;
+            transform: scale(1.1);
         }
 
         main{
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 57vh;
+            flex:1;
             background-color:#c0c0c0;
         }
 
@@ -38,17 +61,18 @@
         .fl{
             display: flex;
             justify-content: center;
-            width: 60vw;
+            width: 60%;
             background-color: #728da8;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
         }
 
         h1 {
             color: #2c3e50;
-            margin: 0px;
         }
         .fl form{
             width: 90%;
-            padding: 10px 0px 10px 50px;
+            padding: 10px;
              background-color: #728da8;
             border-radius: 5px;
             display: flex;
@@ -58,10 +82,12 @@
     table{
         margin: 10px 0px;
     }
+    
    
     th{
         text-align: start;
-        padding: 3px;
+        padding:3px;
+        width: 50%;
     }
 
     .remove , .changePassword{
@@ -73,10 +99,43 @@
         display: none;
     }
     
-    
+    @media (max-width :755px){
+    .fl{
+    width:80%;
+    }
+    }
 
-        @media (width<700px) {
-            #doctorAddF{
-                  width: 90vw;
+        @media (max-width:640px) {
+            .navbar{
+            position:absolute;
+            top:50px;
+            right:0px;
+            flex-direction: column;
+            width: auto;
+            border-bottom-left-radius: 10px;
+            display: none;
+            }
+            
+            .navbar h3{
+            margin:5px 20px;
+            }
+            
+            #menuIcon{
+            display: block;
+            }
+            
+            .fl{
+                width:95%;
+              }
+            .fl form{
+              width:100%;
+            }
+             tr{
+                 display: flex;
+                justify-content: space-evenly;
+               }
+   
+            td{
+            width: 50%;
             }
         }

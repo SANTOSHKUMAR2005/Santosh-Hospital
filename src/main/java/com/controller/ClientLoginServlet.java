@@ -38,7 +38,7 @@ public class ClientLoginServlet extends HttpServlet {
 
 		if (verifyStatus != null && verifyStatus.equals("verified")) {
 			session.setAttribute("username", username);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("home");
 			
 
 		} else {

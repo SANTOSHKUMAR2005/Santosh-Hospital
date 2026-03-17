@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Santosh Hospital</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="css-files/header.css">
 <link rel="stylesheet" href="css-files/footer.css">
 <link rel="stylesheet" href="css-files/adminPage.css">
@@ -20,17 +22,19 @@
 	session.removeAttribute("StatusMsg");
 	}
 	%>
+	
+	<div id="menuIcon" class="fa-solid fa-bars"></div>
 
 	<%@ include file="html-files/header.html"%>
 
 	<!--  protecting from Unauthorized access -->
 	<%
-	if (session == null || session.getAttribute("admin") == null) {
+	if ( session.getAttribute("admin") == null) {
 		response.sendRedirect("home");
 	}
 	String admin = (String) session.getAttribute("admin");
 	%>
-	<h1 style="margin-left: 10px"><%=admin%></h1>
+	<h1 style="margin-left: 10px">Hello <%=admin%></h1>
 
 
 	<!-- Navigation Bar -->

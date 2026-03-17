@@ -7,8 +7,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Santosh Hospital</title>
-<link rel="stylesheet" href="css-files/style.css?v=2">
+<link rel="stylesheet" href="css-files/header.css">
+<link rel="stylesheet" href="css-files/style.css">
 <link rel="stylesheet" href="css-files/message.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="css-files/footer.css">
 </head>
 <body>
 	
@@ -22,56 +25,54 @@
 	%>
 	
 
-	<header id="header">
-		<h1>Santosh Hospital</h1>
-		<p>We Care About Your Health</p>
-		<% if( session.getAttribute("username")==null) {%>
-		<div id="Admin">
-			<h3>Admin</h3>
-			<form action="admin_verification" method="post" style="display:none;">
-				<input type="password" placeholder="password" name="pass" id="pass"
-					required="required">
-				<br> 
-				<input type="submit">
-			</form>
-		</div>
-		<%} %>
+	<%@include file="/WEB-INF/view/html-files/header.html" %>
+	
+	<div id="menuIcon" class="fa-solid fa-bars" ></div>
+
+    
+
+
+	
+	
+	
+	<nav class="navbar">
+		<a href="#home">Home</a> 
+		<a href="#about">About</a> 
+		<a href="#services">Services</a> 
+		<a href="" id="doc">Doctors</a>
 		
-			<span id="loginSpan"> <%
- if ( session.getAttribute("username") == null) {
- %>
-		<h3>
-			<a href="login">login</a>
-		</h3> <%
- } else {
- %>
-		<h3>
-			<%=session.getAttribute("username")%></h3> <%
- }
- %>
-	</span>
-
-
-	</header>
-	
-	
-	<nav>
-		<a href="#home">Home</a> <a href="#about">About</a> <a
-			href="#services">Services</a> <a href="" id="doc">Doctors</a>
+		  <% if( session.getAttribute("username")==null) {
+		      if(session.getAttribute("admin")==null){%>
+			<a href="adminLogin" >Admin</a>
+		     <%}else{ %>
+		     <a href="AdminDashbord" ><%=session.getAttribute("admin")%></a>
+		     <% }}%>
+		
+			 <% if( session.getAttribute("admin")==null) {
+		      if(session.getAttribute("username")==null){%>
+			<a href="login" >Login</a>
+		     <%}else{ %>
+		     <a href="" ><%=session.getAttribute("username")%></a>
+		     <% }}%>
+             
+             <%if(session.getAttribute("admin")!=null || session.getAttribute("username")!=null){ %>
+             <a href="logout">Logout</a>
+             <%} %>
 	</nav>
 
-	<div id="doctorTypes" style="display: none">
-		<a href="related_doctors?type=Dermatologists">Dermatologist</a> <a
-			href="related_doctors?type=Cardiologists">Cardiologists </a> <a
-			href="related_doctors?type=Oncologist">Oncologist</a> <a
-			href="related_doctors?type=Neurologist">Neurologist</a> <a
-			href="related_doctors?type=Endocrinologist">Endocrinologist</a> <a
-			href="related_doctors?type=Gastornterologist">Gastornterologist</a> <a
-			href="related_doctors?type=Ophthalmologist">Ophthalmologist</a> <a
-			href="related_doctors?type=Psychiatrist">Psychiatrist</a> <a
-			href="related_doctors?type=Pulmonologist">Pulmonologist</a> <a
-			href="related_doctors?type=Rheumatologist">Rheumatologist</a> <a
-			href="related_doctors?type=Urologist">Urologist</a>
+	<div id="doctorTypes">
+
+		<a	href="related_doctors?type=Oncologist">Oncologist</a> 
+		<a	href="related_doctors?type=Neurologist">Neurologist</a> 
+		<a	href="related_doctors?type=Endocrinologist">Endocrinologist</a> 
+		<a	href="related_doctors?type=Gastornterologist">Gastornterologist</a> 
+		<a	href="related_doctors?type=Ophthalmologist">Ophthalmologist</a> 
+		<a	href="related_doctors?type=Psychiatrist">Psychiatrist</a> 
+		<a	href="related_doctors?type=Pulmonologist">Pulmonologist</a> 
+		<a	href="related_doctors?type=Rheumatologist">Rheumatologist</a> 
+		<a	href="related_doctors?type=Urologist">Urologist</a>
+		<a href="related_doctors?type=Dermatologists">Dermatologist</a>
+		<a	href="related_doctors?type=Cardiologists">Cardiologists </a> 
 
 	</div>
 
@@ -127,9 +128,7 @@
 		<p>✉️ SantoshHoshpital@gmail.com</p>
 	</section>
 
-	<footer>
-		<p>© 2026 Santosh Hospital</p>
-	</footer>
+ <%@ include file="/WEB-INF/view/html-files/footer.html" %>
 
 	<script type="text/javascript" src="js-files/script.js"></script>
 	<script type="text/javascript" src="js-files/massege.js"></script>

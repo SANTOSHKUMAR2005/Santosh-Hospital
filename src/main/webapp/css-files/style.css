@@ -1,163 +1,157 @@
 * {
-    box-sizing: border-box;
+	margin: 0px;
+	padding: 0px; box-sizing : border-box;
+	overflow-x: hident; 
+	box-sizing: border-box;
 }
 
-	
-	
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f9ff;
-    width:100vw;
+	font-family: Arial, sans-serif;
+	background: #f4f9ff;
+	width: 100vw;
 }
 
-/* Header */
-header {
-    background: #0077b6;
-    color: white;
-    text-align: center;
-    padding: 20px;   
-    position: relative;
-   
-    
-}
-#Admin{
-	display: inline;
-	position: absolute;
-	top:50%;
-	left:3%;
-	translate:0 -50%;
-	width: 10%;
-	
-}
-#loginSpan{
-	position: absolute;
-	top:50%;
-	right:5%;
-	translate:0 -50%;
-	width: 10%;
-	color:white;
-}
-h3{
-	margin:0px;	
-}
 
-#pass{
-	width:100%;
+#menuIcon {
+	position: absolute;
+	right: 20px;
+	top:50px;
+	margin-right: 10px;
+	font-size: 25px;
+	margin-bottom: 10px;
+	display: none;
 }
 
 
 /* Navigation */
 nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    background: #023e8a;
-}
-
-nav a {
-    color: white;
-    padding: 12px 20px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav a:hover {
-    background: #0077b6;
-}
-
-
-#doctorTypes{
-	position:absolute;
-	display:flex;
-	flex-direction:column;
-	justify-content:space-around;
-	justify-content:center;
+	display: flex;
+	justify-content: center;
 	align-items:center;
-	background-color:gray;
-	border-bottom-left-radius:10px;
-	border-bottom-right-radius:10px;
-	padding-bottom:5px;
+	flex-wrap : wrap;
+	background: #023e8a;
+	flex-wrap: wrap;
 	
-	width:200px;
-	left:53vw;
 }
 
-div a{
-	margin:5px 0px;
-	font-weight: bolder;
-	color : white;
+
+ a {
+	color: white;
+	padding: 20px 20px; 
+	text-decoration: none;
+	font-weight: bold;
+	text-align: center;
 }
+
+ a:hover {
+	background: #0077b6;
+	translate:scale(1.2);
+	border-radius: 10px;
+	
+}
+
+#doctorTypes {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	justify-content: center;
+    align-items: center; 
+	background: #023e8a;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	width: 200px;
+	left: -205px;
+	translate:-50%;
+}
+#doctorTypes a {
+	width:100%;
+	padding: 10px 0px; 
+
+}
+
 
 /* Sections */
 .section {
-    padding: 40px 20px;
-    text-align: center;
+	padding: 40px 20px;
+	text-align: center;
 }
 
 .light {
-    background: white;
+	background: white;
 }
 
 /* Services Cards */
 .services {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .card {
-    background: white;
-    padding: 20px;
-    width: 200px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	background: white;
+	padding: 20px;
+	width: 200px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Footer */
-footer {
-    background: #0077b6;
-    color: white;
-    text-align: center;
-    padding: 10px;
-}
+
 
 /* 📱 Mobile Responsive Design */
-@media (max-width: 768px) {
-	
-	*{
-	margin:0px;
-	padding:0px;
+@media ( max-width : 640px) {
+	#menuIcon {
+		display: block;
 	}
-     
-     #pass{
-     width:100px;
-     }
-     
-    nav {
-        flex-direction: column;
-    }
+	nav {
+		flex-direction: column;
+		min-width: 200px;
+		position: absolute;
+		border-bottom-left-radius: 10px;
+		right: 0px;
+		display: none;
+	}
+	nav a {
+	    width:100%;
+		text-align: center;
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+	}
 
-    nav a {
-        text-align: center;
-        border-top: 1px solid rgba(255,255,255,0.2);
-    }
-    #doctorTypes{
-    left:38vw;
-    }
-
-    .services {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card {
-        width: 90%;
-    }
-
-    header h1 {
-        font-size: 22px;
-    }
+	.services {
+		flex-direction: column;
+		align-items: center;
+	}
+	.card {
+		width: 90%;
+	}
+	header h1 {
+		font-size: 22px;
+	}
 }
 
+
+.doctorShow{
+	animation : showDoc 1s forwards;
+}
+
+@keyframes showDoc{
+	0%{
+	  left:-205px;
+	}
+	100%{
+	left:50%;
+	}
+}
+
+.doctorHide{
+	animation: hideDoc 1s forwards;
+}
+@keyframes hideDoc{
+	0%{
+	  left:50%;
+	}
+	100%{
+	  left:-205px;
+	}
+}

@@ -28,6 +28,10 @@
 					<td><input type="text" id="username" name="username" required></td>
 				</tr>
 				<tr>
+					<th><label for="password">Password : </label></th>
+					<td><input type="password" id="password" name="password" required></td>
+				</tr>
+				<tr>
 					<th><label for="phoneNo">Phone no. : </label></th>
 					<td><input type="tel" name="phone" id="phoneNo" required></td>
 					<td><button id="sendOTP" type="button" data-action="sendOTP" >send OTP</button>
@@ -40,23 +44,14 @@
 						<td><input type="number" id="otp" required="required"></td>
 						<td><button type="button" data-action="verifyOTP">Verify OTP</button><td>
 					</tr>
-					
-					<tr  class="nn" id="passwordSection1">
-						<th><label for="pass">Password : </label></th>
-						<td><input type="password" id="pass" name="password" required="required" placeholder="minimum 6 digit"></td>
-					</tr>	
-					<tr  class="nn" id="passwordSection2">
-						<th><label for="Cpass">Confirm Password : </label></th>
-						<td><input type="password" id="Cpass"  required="required"></td>
-					</tr>			
+								
 			</table>
-			<button id="signInButton" class="nn" type="button" data-action="SignIn">Sign-In</button>
+			<button id="signInButton" class="nn"  type="button" ><a href="AdminDashbord">Enter now</a></button>
 		</form>
-		<span style="margin-top: 20px">if you have an account : <a href="login">login</a></span>
 	</div>
 	</div>
 	
-	<script type="text/javascript" src="js-files/signup.js"></script>
+	<script type="text/javascript" src="js-files/adminLogin.js"></script>
 
 </body>
 </html>

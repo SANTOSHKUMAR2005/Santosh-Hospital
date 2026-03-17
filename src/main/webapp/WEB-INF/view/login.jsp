@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css-files/login.css"> 
 <link rel="stylesheet" href="css-files/message.css">
 
@@ -39,6 +39,6 @@
 			<span style="margin-top: 20px">if you have not an account : <a href="Signup">Sign-up</a></span>
 		</div>
 	</div>
-		<script type="text/javascript" src="js-files/massege.js"></script>
+<script type="text/javascript" src="js-files/massege.js"></script>
 </body>
 </html>

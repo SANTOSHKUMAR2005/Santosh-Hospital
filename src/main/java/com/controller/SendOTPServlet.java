@@ -27,8 +27,7 @@ public class SendOTPServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,13 +57,13 @@ public class SendOTPServlet extends HttpServlet {
 		}
 	}
 
-	private String generateOTP() {
+	public static String generateOTP() {
 		Random random = new Random();
 		int OTP = random.nextInt(100000, 999999);
 		return OTP + "";
 	}
 
-	private boolean SendOTP(String phone, int OTP) {
+	public static boolean SendOTP(String phone, int OTP) {
 
 		String MyApiKey = "";
 		try {

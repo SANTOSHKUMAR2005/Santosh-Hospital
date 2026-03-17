@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css-files/doctorsDiscription.css?v=2">
-<link rel="stylesheet" href="css-files/header.css?v=2">
-<link rel="stylesheet" href="css-files/footer.css?v=2">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css-files/doctorsDiscription.css">
+<link rel="stylesheet" href="css-files/header.css">
+<link rel="stylesheet" href="css-files/footer.css">
 <link rel="stylesheet" href="css-files/message.css">
 <title>Santosh Hospital</title>
 </head>
@@ -27,19 +28,21 @@
 
 	
 	<div id="homeDiv">
-		<a href="home" style="color: white">Home</a>
+		<p><a href="home" style="color: white">Home</a></p>
 		<% if(session==null || session.getAttribute("doctors")==null){
+			session.setAttribute("StatusMsg", "Internal Error !");
 			response.sendRedirect("home");
 			}
 		String dipartment = (String) session.getAttribute("docType");
 		ArrayList<DocBasicInfo> doctors = (ArrayList<DocBasicInfo>) session.getAttribute("doctors");
 		%>
 		<div id="docType">
-			<h2><%=dipartment%></h2>
+			<p><%=dipartment%></p>
 		</div>
 	</div>
 
 	<main>
+	<%if(doctors.size()>0){ %>
 		<div id="mainDiv">
 			<%
 			for (DocBasicInfo doctor : doctors) {
@@ -72,12 +75,11 @@
 			}
 			%>
 		</div>
+	<%}else{ %>
+	<h4>Sorry! We have not this type of Doctors</h4>
+	<%} %>
 	</main>
-	<!--  
-   <footer>
-    <p>© 2026 Santosh Hospital</p>
-</footer>
-   -->
+
 
 	<%@ include file="html-files/footer.html"%>
 	<script type="text/javascript" src="js-files/massege.js"></script>

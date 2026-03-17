@@ -1,78 +1,95 @@
 /**
  * 
  */
-document.addEventListener('DOMContentLoaded',()=>{
-const doctorAdd=document.querySelector("#AddDoc");
-var RemoveDoc=document.querySelector('#RemoveDoc');
-var changePass=document.querySelector('#changePass');
-var addAdm=document.querySelector('#addAdm');
+document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.querySelector('.navbar');
+	let show=false;
 
-
-var doctorAddF=document.querySelector('#doctorAddF');
-var doctorRemoveF=document.querySelector('#doctorRemoveF');
-var changeAdminPass=document.querySelector('#changeAdminPass');
-var addAdmin=document.querySelector('#addAdmin');
-
-doctorAdd.addEventListener('click',()=>{
-doctorAddF.classList.toggle('fl');
-doctorAddF.classList.toggle('nn');
-
-doctorRemoveF.classList.remove('remove');
-doctorRemoveF.classList.add('nn');
-
-changeAdminPass.classList.add('nn');
-changeAdminPass.classList.remove('changePassword');
-
-addAdmin.classList.remove('fl');
-addAdmin.classList.add('nn');
-
+document.addEventListener('click',(e)=>{
+	if(show){
+		navbar.style.display='none';
+		show=false;
+	}else if(e.target.id=="menuIcon"){
+		navbar.style.display='flex';
+		show=true;		
+	}
 })
 
-RemoveDoc.addEventListener('click',()=>{
-doctorRemoveF.classList.toggle('remove');
-doctorRemoveF.classList.toggle('nn');
 
-doctorAddF.classList.remove('fl');
-doctorAddF.classList.add('nn');
+    const doctorAdd = document.querySelector("#AddDoc");
+    var RemoveDoc = document.querySelector('#RemoveDoc');
+    var changePass = document.querySelector('#changePass');
+    var addAdm = document.querySelector('#addAdm');
 
-changeAdminPass.classList.add('nn');
-changeAdminPass.classList.remove('changePassword');
 
-addAdmin.classList.remove('fl');
-addAdmin.classList.add('nn');
+    var doctorAddF = document.querySelector('#doctorAddF');
+    var doctorRemoveF = document.querySelector('#doctorRemoveF');
+    var changeAdminPass = document.querySelector('#changeAdminPass');
+    var addAdmin = document.querySelector('#addAdmin');
 
-})
+    doctorAdd.addEventListener('click', () => {
 
-changePass.addEventListener('click',()=>{
-changeAdminPass.classList.toggle('changePassword');
-changeAdminPass.classList.toggle('nn');
+        doctorAddF.classList.toggle('fl');
+        doctorAddF.classList.toggle('nn');
 
-doctorAddF.classList.remove('fl');
-doctorAddF.classList.add('nn');
+        doctorRemoveF.classList.remove('remove');
+        doctorRemoveF.classList.add('nn');
 
-doctorRemoveF.classList.remove('remove');
-doctorRemoveF.classList.add('nn');
+        changeAdminPass.classList.add('nn');
+        changeAdminPass.classList.remove('changePassword');
 
-addAdmin.classList.remove('fl');
-addAdmin.classList.add('nn');
+        addAdmin.classList.remove('fl');
+        addAdmin.classList.add('nn');
 
-})
+    })
 
-addAdm.addEventListener('click',()=>{
-	
-addAdmin.classList.toggle('fl');
-addAdmin.classList.toggle('nn');
+    RemoveDoc.addEventListener('click', () => {
 
-doctorAddF.classList.remove('fl');
-doctorAddF.classList.add('nn');
+        doctorRemoveF.classList.toggle('remove');
+        doctorRemoveF.classList.toggle('nn');
 
-doctorRemoveF.classList.remove('remove');
-doctorRemoveF.classList.add('nn');
+        doctorAddF.classList.remove('fl');
+        doctorAddF.classList.add('nn');
 
-changeAdminPass.classList.add('nn');
-changeAdminPass.classList.remove('changePassword');
+        changeAdminPass.classList.add('nn');
+        changeAdminPass.classList.remove('changePassword');
 
-})
+        addAdmin.classList.remove('fl');
+        addAdmin.classList.add('nn');
+
+    })
+
+    changePass.addEventListener('click', () => {
+
+        changeAdminPass.classList.toggle('changePassword');
+        changeAdminPass.classList.toggle('nn');
+
+        doctorAddF.classList.remove('fl');
+        doctorAddF.classList.add('nn');
+
+        doctorRemoveF.classList.remove('remove');
+        doctorRemoveF.classList.add('nn');
+
+        addAdmin.classList.remove('fl');
+        addAdmin.classList.add('nn');
+
+    })
+
+    addAdm.addEventListener('click', () => {
+
+        addAdmin.classList.toggle('fl');
+        addAdmin.classList.toggle('nn');
+
+        doctorAddF.classList.remove('fl');
+        doctorAddF.classList.add('nn');
+
+        doctorRemoveF.classList.remove('remove');
+        doctorRemoveF.classList.add('nn');
+
+        changeAdminPass.classList.add('nn');
+        changeAdminPass.classList.remove('changePassword');
+
+    })
 
 
 

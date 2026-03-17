@@ -8,6 +8,6 @@ public interface AdminDAO {
 	  String addAdmin(AdminDTO admindto);
       String changeName(String newName);
       String changePassword(String newPass);
-      String varifyAdmin(String password);
+      String varifyAdmin(String username , String password, String phone);
       
 }
