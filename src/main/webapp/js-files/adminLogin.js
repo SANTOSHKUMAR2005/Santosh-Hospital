@@ -21,7 +21,7 @@ let timerId;
 
 function runTimer() {
     timerId = setInterval(function() {
-        timer.innerText = time;
+        timer.innerText = Math.floor(time/60 )+" : "+time%60;
         time--;
         if (time < 0) {
             timer.classList.add('nn');
@@ -60,17 +60,26 @@ function sendOTP(e) {
 			}).then(res => res.text()).then(data => {
 			    if (data != null && data == "send") {
 					
-					notificationMsg.innerText ="OTP sent to email : "+email;
+					notificationMsg.innerText ="OTP hash been sent to Email : "+email +"." +
+										         " Please check Spam folder also. ";
 								
 			        document.querySelector('#OTPSection').classList.remove('nn');
 			        e.target.style.display = 'none';
 					document.querySelector('#username').disabled = true;
 					document.querySelector("#password").disabled = true;
 					document.querySelector("#email").disabled = true;
-			        time = 60;
+			        time = 300;
 			        runTimer();
 			        timer.classList.remove('nn');
-			    } else {
+			    } else if(data != null && data == "sended"){
+					notificationMsg.innerText ="OTP all ready sended on your email. please check your email or try after some time. ";
+					document.querySelector('#OTPSection').classList.remove('nn');
+					document.querySelector('#username').disabled = true;
+					document.querySelector("#password").disabled = true;
+					document.querySelector("#email").disabled = true;
+					e.target.style.display = 'none';
+				}
+				else {
 			        notificationMsg.innerText = data;
 			        documen.querySelector('#sendOTP').style.display = "inline";
 			    }

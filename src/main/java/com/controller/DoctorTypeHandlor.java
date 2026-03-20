@@ -19,9 +19,7 @@ import com.dto.DocBasicInfo;
 public class DoctorTypeHandlor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	
 		String type=request.getParameter("type");

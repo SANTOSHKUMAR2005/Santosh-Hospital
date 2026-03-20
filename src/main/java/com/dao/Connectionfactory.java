@@ -1,9 +1,9 @@
 package com.dao;
 
-import java.io.FileInputStream;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
+
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

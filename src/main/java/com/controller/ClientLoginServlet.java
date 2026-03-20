@@ -13,9 +13,7 @@ import java.io.IOException;
 import com.dao.HospitalDAO;
 import com.dao.HospitalDAOImp;
 
-/**
- * Servlet implementation class ClientLoginServlet
- */
+
 @WebServlet("/login")
 public class ClientLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +36,7 @@ public class ClientLoginServlet extends HttpServlet {
 
 		if (user != null ) {
 			session.setAttribute("username", user);
+			session.setMaxInactiveInterval(24*60*60);
 			session.setAttribute("StatusMsg", "Login successfull.");
 			response.sendRedirect("home");
 			

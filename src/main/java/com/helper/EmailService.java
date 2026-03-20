@@ -25,6 +25,7 @@ public class EmailService {
 
 	  public static boolean sendOtp(String recipientEmail ,String OTP) {
 
+
 		  SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 		  Email from =new Email(System.getenv("hospital_email"));
 

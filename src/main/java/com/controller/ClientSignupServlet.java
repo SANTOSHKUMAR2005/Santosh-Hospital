@@ -13,9 +13,7 @@ import com.dao.HospitalDAO;
 import com.dao.HospitalDAOImp;
 import com.dto.ClientDTO;
 
-/**
- * Servlet implementation class ClientSignupServlet
- */
+
 @WebServlet("/Signup")
 public class ClientSignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,9 +22,7 @@ public class ClientSignupServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/signup.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	

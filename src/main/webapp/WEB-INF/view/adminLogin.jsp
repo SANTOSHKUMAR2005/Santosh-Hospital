@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css-files/signup.css">
 <link rel="stylesheet" href="css-files/message.css">
+ <link rel="icon" href="images/logo.png" type="image/x-icon">
 <title>Santosh Hospital</title>
 </head>
 <body >

@@ -14,9 +14,7 @@ import java.sql.ResultSet;
 import com.dao.Connectionfactory;
 
 
-/**
- * Servlet implementation class Image
- */
+
 @WebServlet("/image")
 public class ImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

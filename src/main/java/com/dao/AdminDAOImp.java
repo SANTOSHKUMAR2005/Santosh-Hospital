@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.dto.AdminDTO;
-import com.dto.DoctorDTO;
 
 public class AdminDAOImp implements AdminDAO{
 	@Override
@@ -15,7 +14,7 @@ public class AdminDAOImp implements AdminDAO{
 		String query="create table if not exists Admin( "
 				+ "AdminName varchar(50) not null unique, "
 				+ "pass varchar(50) not null, "
-				+ "email varchar(15)"
+				+ "email varchar(30) not  null "
 				+ ");";
 		Connection con=Connectionfactory.getConnection();
 		Statement statement=null;
@@ -25,7 +24,6 @@ public class AdminDAOImp implements AdminDAO{
 			 
 			
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
 		Connectionfactory.close(statement);
