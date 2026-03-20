@@ -1,5 +1,6 @@
 .notificationBox{
     position: absolute;
+    z-index:5;
     left: 50%;
     translate:-50%;
     min-width: 300px;

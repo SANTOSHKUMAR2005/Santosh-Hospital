@@ -15,7 +15,7 @@ public class AdminDAOImp implements AdminDAO{
 		String query="create table if not exists Admin( "
 				+ "AdminName varchar(50) not null unique, "
 				+ "pass varchar(50) not null, "
-				+ "phone_number varchar(15)"
+				+ "email varchar(15)"
 				+ ");";
 		Connection con=Connectionfactory.getConnection();
 		Statement statement=null;
@@ -59,9 +59,9 @@ public class AdminDAOImp implements AdminDAO{
 	}	
 
 	@Override
-	public String varifyAdmin(String username , String password, String phone) {
+	public String varifyAdmin(String username , String password, String email) {
 		  
-		String query="select AdminName from Admin where AdminName=? and pass=? and phone_number=? ;";
+		String query="select AdminName from Admin where AdminName=? and pass=? and email=? ;";
 		
 		Connection con=Connectionfactory.getConnection();
 		PreparedStatement ps=null;
@@ -70,7 +70,7 @@ public class AdminDAOImp implements AdminDAO{
 			ps=con.prepareStatement(query);
 			ps.setString(1, username);
 			ps.setString(2, password);
-			ps.setString(3, phone);
+			ps.setString(3, email);
 		    resultSet = ps.executeQuery();
 			
 			if(resultSet.next()) {

@@ -33,16 +33,17 @@ public class ClientLoginServlet extends HttpServlet {
 		String password = request.getParameter("password").trim();
 
 		HospitalDAO hospitalDAO = new HospitalDAOImp();
-		String verifyStatus = hospitalDAO.verifyClient(username, password);
+		String user= hospitalDAO.verifyClient(username, password);
 		HttpSession session = request.getSession();
 
-		if (verifyStatus != null && verifyStatus.equals("verified")) {
-			session.setAttribute("username", username);
+		if (user != null ) {
+			session.setAttribute("username", user);
+			session.setAttribute("StatusMsg", "Login successfull.");
 			response.sendRedirect("home");
 			
 
 		} else {
-			session.setAttribute("StatusMsg", verifyStatus);
+			session.setAttribute("StatusMsg", "Invalied username or password.");
 			response.sendRedirect("login");
 		}
 

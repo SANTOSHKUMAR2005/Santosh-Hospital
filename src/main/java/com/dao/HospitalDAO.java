@@ -13,9 +13,11 @@ public interface HospitalDAO {
         
         String addDoctor(DoctorDTO docInfo);
         String addClient(ClientDTO clientInfo);
-        String usernameAvailbility(String username);
+        String usernameAvailbility(String username );
+        String emailAvailbility(String email );
         String verifyClient(String username ,String password);
         String deleteDoctor(int doctorId);
+        boolean hasAppointmentBooked(String username ,int doctorId);
         String bookAppointment(String username , int doctorId);
         ArrayList<DocBasicInfo> getRelatedDoctors(String doctorType);
 }

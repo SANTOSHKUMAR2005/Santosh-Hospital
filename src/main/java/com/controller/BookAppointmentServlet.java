@@ -12,16 +12,12 @@ import java.io.IOException;
 import com.dao.HospitalDAO;
 import com.dao.HospitalDAOImp;
 
-/**
- * Servlet implementation class BookAppointmentServlet
- */
+
 @WebServlet("/bookAppointment")
 public class BookAppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String StatusMsg="";
@@ -33,20 +29,17 @@ public class BookAppointmentServlet extends HttpServlet {
 			String username=(String)session.getAttribute("username");
 			int doctorId= Integer.parseInt(request.getParameter("doctorId"));
 	         HospitalDAO hospitalDAO=new HospitalDAOImp();
+	        if(!hospitalDAO.hasAppointmentBooked(username, doctorId)) {
 	         
 			StatusMsg=hospitalDAO.bookAppointment(username , doctorId);
+	        }else {
+	        	StatusMsg="your appointment has been booked already.";
+	        }
 			session.setAttribute("StatusMsg", StatusMsg);
 			response.sendRedirect("related_doctors");
 		}
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
 }

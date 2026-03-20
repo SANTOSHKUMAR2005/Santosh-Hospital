@@ -32,10 +32,10 @@ public class ClientSignupServlet extends HttpServlet {
 	
 		
 		String username=request.getParameter("username");
-		String phone=request.getParameter("phone");
+		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		
-		ClientDTO client=new ClientDTO(username , password , phone);
+		ClientDTO client=new ClientDTO(username , password , email);
 		
 		HospitalDAO hospitalDao=new HospitalDAOImp();
 		String StatusMsg=hospitalDao.addClient(client);

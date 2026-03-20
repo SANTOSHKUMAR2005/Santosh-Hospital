@@ -50,7 +50,7 @@ public class HospitalDAOImp implements HospitalDAO {
 		String query = "create table if not exists Clients ("
 				+ "client_id int unique not null primary key auto_increment, "
 				+ "client_username varchar(100) not null unique, " + "password varchar(100) not null ,"
-				+ "client_phone varchar(15) not null " + ");";
+				+ "client_email varchar(30) not null unique" + ");";
 
 		Connection con = Connectionfactory.getConnection();
 		Statement statement = null;
@@ -162,13 +162,13 @@ public class HospitalDAOImp implements HospitalDAO {
 		String statusMsg = null;
 		Connection con = Connectionfactory.getConnection();
 		PreparedStatement ps = null;
-		String query = "insert into Clients " + "(client_username , password , client_phone) " + "value(?,?,?);";
+		String query = "insert into Clients " + "(client_username , password , client_email) " + "value(?,?,?);";
 
 		try {
 			ps = con.prepareStatement(query);
 			ps.setString(1, clientInfo.getClient_Username());
 			ps.setString(2, clientInfo.getPassword());
-			ps.setString(3, clientInfo.getClient_Phone());
+			ps.setString(3, clientInfo.getClient_email());
 
 			int a = ps.executeUpdate();
 
@@ -183,22 +183,23 @@ public class HospitalDAOImp implements HospitalDAO {
 		}
 		return statusMsg;
 	}
-
+	
 	@Override
-	public String usernameAvailbility(String username) {
+	public String emailAvailbility(String email) {
 		String StatusMsg = null;
 		Connection con = Connectionfactory.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String query = "select client_username from Clients where client_username=? ;";
+		String query = "select client_email  from Clients where client_email=?  ;";
 
 		try {
 			ps = con.prepareStatement(query);
-			ps.setString(1, username);
+			ps.setString(1, email);
 
 			rs = ps.executeQuery();
-			if (rs.next())
-				StatusMsg = "not availble";
+			if (rs.next()) {
+				StatusMsg="availble";
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -211,32 +212,90 @@ public class HospitalDAOImp implements HospitalDAO {
 	}
 
 	@Override
-	public String verifyClient(String username, String password) {
-		String statusMsg = null;
+	public String usernameAvailbility(String username ) {
+		String StatusMsg = null;
 		Connection con = Connectionfactory.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String query = "select client_id from Clients where client_username=? and password=? ;";
+		String query = "select client_username  from Clients where client_username=?  ;";
 
 		try {
 			ps = con.prepareStatement(query);
 			ps.setString(1, username);
-			ps.setString(2, password);
 
 			rs = ps.executeQuery();
-			statusMsg = rs.next() ? "verified" : "user not found";
+			if (rs.next()) {
+				StatusMsg="availble";
+			}
 
 		} catch (SQLException e) {
-			statusMsg = "enternal error";
 			e.printStackTrace();
 		} finally {
 			Connectionfactory.close(rs);
 			Connectionfactory.close(ps);
 			Connectionfactory.close(con);
 		}
-		return statusMsg;
+		return StatusMsg;
+	}
+	
+
+	@Override
+	public String verifyClient(String username, String password) {
+		String user = null;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = "select client_username from Clients where ( client_username=? or client_email=? ) and password=? ;";
+
+		try {
+			ps = con.prepareStatement(query);
+			ps.setString(1, username);
+			ps.setString(2, username);
+			ps.setString(3, password);
+
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				user=rs.getString("client_username");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		return user;
 	}
 
+	@Override
+	public boolean hasAppointmentBooked(String username, int doctorId) {
+		boolean status = false;
+		Connection con = Connectionfactory.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = "select appointment_id , appointment_date from Appointments where  patient_username=? and doctor_id=? and booking_date=? ;";
+
+		try {
+			ps = con.prepareStatement(query);
+			ps.setString(1, username);
+			ps.setInt(2, doctorId);
+			ps.setDate(3,  Date.valueOf(LocalDate.now()));
+
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				status=true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connectionfactory.close(rs);
+			Connectionfactory.close(ps);
+			Connectionfactory.close(con);
+		}
+		return status;
+	}
 	@Override
 	public String bookAppointment(String username, int doctorId) {
 

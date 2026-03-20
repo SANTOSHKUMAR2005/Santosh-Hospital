@@ -1,6 +1,5 @@
-/**
- * 
- */let notificationBox = document.querySelector('#notificationBox');
+
+let notificationBox = document.querySelector('#notificationBox');
 let notificationMsg = document.querySelector('#notificationMsg');
 
 function closeNotification() {
@@ -29,7 +28,8 @@ function runTimer() {
             document.querySelector('#OTPSection').classList.add('nn');
             document.querySelector('#sendOTP').style.display = 'inline';
             document.querySelector('#username').disabled = false;
-            document.querySelector("#phoneNo").disabled = false;
+			document.querySelector("#password").disabled = false;
+            document.querySelector("#email").disabled = false;
             clearInterval(timerId);
         }
     }, 1000)
@@ -48,33 +48,37 @@ document.addEventListener('click', (e) => {
 
 
 function sendOTP(e) {
-    let username = document.querySelector('#username').value.trim();
+    let adminName = document.querySelector('#username').value.trim();
 	let password = document.querySelector('#password').value.trim();
-    let phone = document.querySelector('#phoneNo').value.trim();
-    if (username != "" && phone != "" && password!="") {
-        if (phone.length != 10) {
-            notificationMsg.innerText = "enter valid phone number";
+    let email = document.querySelector('#email').value.trim();
+    if (adminName != "" && email != "" && password!="") {
+        if (email.includes('@') && email.includes('.')) {
+			fetch("admin_verification", {
+			    method: "post",
+			    headers: { "Content-type": "application/x-www-form-urlencoded" },
+			    body: "adminName=" + adminName + "&password="+password + "&email=" + email
+			}).then(res => res.text()).then(data => {
+			    if (data != null && data == "send") {
+					
+					notificationMsg.innerText ="OTP sent to email : "+email;
+								
+			        document.querySelector('#OTPSection').classList.remove('nn');
+			        e.target.style.display = 'none';
+					document.querySelector('#username').disabled = true;
+					document.querySelector("#password").disabled = true;
+					document.querySelector("#email").disabled = true;
+			        time = 60;
+			        runTimer();
+			        timer.classList.remove('nn');
+			    } else {
+			        notificationMsg.innerText = data;
+			        documen.querySelector('#sendOTP').style.display = "inline";
+			    }
+			})
+            
         }
         else {
-            fetch("admin_verification", {
-                method: "post",
-                headers: { "Content-type": "application/x-www-form-urlencoded" },
-                body: "username=" + username + "&password="+password + "&phone=" + phone
-            }).then(res => res.text()).then(data => {
-                if (data != null && data == "send") {
-					
-					notificationMsg.innerText ="OTP sent to phone no. "+phone;
-								
-                    document.querySelector('#OTPSection').classList.remove('nn');
-                    e.target.style.display = 'none';
-                    time = 60;
-                    runTimer();
-                    timer.classList.remove('nn');
-                } else {
-                    notificationMsg.innerText = data;
-                    documen.querySelector('#sendOTP').style.display = "inline";
-                }
-            })
+			notificationMsg.innerText = "enter valid phone number";
         }
     }
     else {
@@ -90,11 +94,18 @@ function sendOTP(e) {
 function verifyOTP() {
     let otp = document.querySelector('#otp').value.trim();
     if (otp.length == 6) {
-
+		
+		document.querySelector('#username').disabled = false;
+		document.querySelector("#email").disabled = false;
+		let adminName = document.querySelector('#username').value.trim();
+		   let email = document.querySelector('#email').value.trim();
+		   document.querySelector('#username').disabled = true;
+		   document.querySelector("#email").disabled = true;
+         
         fetch("verifyOTP", {
             method: "post",
             headers: { "Content-type": "application/x-www-form-urlencoded" },
-            body: "otp=" + otp
+            body:"adminName="+ adminName + "&otp=" + otp +"&email="+email
         }).then(res => res.text()).then(data => {
             if (data == "verified") {
 

@@ -9,6 +9,7 @@ import com.dao.AdminDAO;
 import com.dao.AdminDAOImp;
 import com.dao.Connectionfactory;
 import com.dao.HospitalDAOImp;
+import com.dao.OtpDao;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -54,14 +55,15 @@ public class ProjectListener implements ServletContextListener{
     	
     	
     	//creating table
-//    	HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
-//    	hospitalDAOImp.createDoctorsTable();
-//    	hospitalDAOImp.createClientTable();
-//    	hospitalDAOImp.createAppointmentTable();
-//    	
-//    	AdminDAO adminDAO=new AdminDAOImp();
-//    	adminDAO.createAdminTable();
+    	HospitalDAOImp hospitalDAOImp=new HospitalDAOImp();
+    	hospitalDAOImp.createDoctorsTable();
+    	hospitalDAOImp.createClientTable();
+    	hospitalDAOImp.createAppointmentTable();
     	
+    	AdminDAO adminDAO=new AdminDAOImp();
+    	adminDAO.createAdminTable();
+    	
+    	OtpDao.creatOtpVerificationTable();
     	
    }
 

@@ -72,8 +72,14 @@ margin:2px 0px;
   margin-right: 3px;
   
 }
+#photo img{
+	height: 100%;
+	 width: 100%;
+	 border-radius: 50%; 
+	 object-fit: cover
+}
 
-span{
+#cart span{
   padding-top: 20px;
 }
 #discription{

@@ -28,8 +28,8 @@
 					<td><input type="text" id="username" name="username" required></td>
 				</tr>
 				<tr>
-					<th><label for="phoneNo">Phone no. : </label></th>
-					<td><input type="tel" name="phone" id="phoneNo" required></td>
+					<th><label for="email">Email : </label></th>
+					<td><input type="email" name="email" id="email" required></td>
 					<td><button id="sendOTP" type="button" data-action="sendOTP" >send OTP</button>
 					 <span id="timer" class="nn"></span></td>
 				</tr>

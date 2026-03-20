@@ -1,3 +1,4 @@
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.dto.DocBasicInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,17 +15,20 @@
 <title>Santosh Hospital</title>
 </head>
 <body>
+
+<%@include file="html-files/header.html"%>
     
-    <%
-	if (session != null && session.getAttribute("StatusMsg") != null) {
+ <%
+	if (session.getAttribute("StatusMsg") != null) {
 	%>
 	<%@include file="html-files/message.html"%>
+
 	<%
 	session.removeAttribute("StatusMsg");
 	}
 	%>
 
-	<%@include file="html-files/header.html"%>
+	
 
 	
 	<div id="homeDiv">
@@ -52,7 +56,7 @@
 					<div id="photo">
 						<img id="profilePic" alt="img"
 							src="image?id=<%=doctor.getDoctor_id()%>"
-							style="height: 100%; width: 100%; border-radius: 50%; object-fit: cover">
+							style="">
 					</div>
 					<span>
 						<h2 id="docNane"><%=doctor.getDoctor_name()%></h2>
@@ -82,6 +86,7 @@
 
 
 	<%@ include file="html-files/footer.html"%>
+	
 	<script type="text/javascript" src="js-files/massege.js"></script>
 
 </body>

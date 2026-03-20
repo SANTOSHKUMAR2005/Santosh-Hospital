@@ -26,7 +26,7 @@
 				<table>
 					<tr>
 						<th><label for="username">Username : </label></th>
-						<td><input id="username" name="username" required="required"></td>
+						<td><input id="username" name="username" required="required" placeholder="username or email"></td>
 					</tr>
 					<tr>
 						<th><label for="pass">Password : </label></th>

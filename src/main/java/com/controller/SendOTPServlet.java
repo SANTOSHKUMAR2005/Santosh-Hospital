@@ -8,19 +8,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Base64;
 import java.util.Random;
 
 import com.dao.HospitalDAO;
 import com.dao.HospitalDAOImp;
+import com.dao.OtpDao;
+import com.dao.OtpDao.Otp;
+import com.helper.EmailService;
 
-/**
- * Servlet implementation class SendOTPServlet
- */
 @WebServlet("/sendOTPServlet")
 public class SendOTPServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,63 +33,46 @@ public class SendOTPServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String Username = request.getParameter("username");
+		String email = request.getParameter("email");
 		HospitalDAO hospitalDAO = new HospitalDAOImp();
-		String availbility = hospitalDAO.usernameAvailbility(Username);
-		if (availbility != null) {
+		
+		if(hospitalDAO.emailAvailbility(email) !=null) {
+			response.getWriter().print("account with this email already exist.");
+			return;
+		}
+	   
+		if (hospitalDAO.usernameAvailbility(Username) != null) {
 			response.getWriter().print("username not availble plese try diffent username");
 			return;
 		}
 
-		String phone = request.getParameter("phone");
-		String otp = generateOTP();
-
-//		boolean OTPStatus= SendOTP(phone,otp);
-		boolean OTPStatus = true;
-		if (OTPStatus) {
-			HttpSession session = request.getSession();
-			session.setAttribute("otp", otp);
-			session.setAttribute("otpTime", System.currentTimeMillis());
-			System.out.println(otp);
-			response.setContentType("text/plain");
-			response.getWriter().print("send");
-		} else {
-			response.getWriter().print("failed to send OTP. Please try Again");
-		}
-	}
-
-	public static String generateOTP() {
-		Random random = new Random();
-		int OTP = random.nextInt(100000, 999999);
-		return OTP + "";
-	}
-
-	public static boolean SendOTP(String phone, int OTP) {
-
-		String MyApiKey = "";
-		try {
-			URL url = new URL("");
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("post");
-			con.setRequestProperty("authorization", MyApiKey);
-			con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-			con.setDoOutput(true);
-
-			String message = "your OTP is " + OTP;
-			String data = "route=3&sender_id=SantoshHospital&message=" + message + "&language=english&flash=0&numbers="
-					+ phone;
-
-			OutputStream os = con.getOutputStream();
-			os.write(data.getBytes());
-			os.flush();
-			os.close();
-			System.out.println(con.getResponseCode());
-			System.out.println(con.getResponseMessage());
-			return true;
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
+		
+		Otp otpObj = OtpDao.getOtpByEmail(email);
+		if(otpObj!=null){
+			long generatedTime = otpObj.generatedTime;
+			long diff=System.currentTimeMillis()-generatedTime;
+			if(diff<300000) {
+				response.getWriter().print("sended");
+				return;
+			}else {
+				OtpDao.deleteOtp(email);
+			}	
 		}
 
+		    String otp = EmailService.generateOTP();
+		
+			if(EmailService.sendOtp(email, otp)) {
+			
+			    OtpDao.saveOtp(email, Username, otp, System.currentTimeMillis());
+			
+			    response.setContentType("text/plain");
+			    response.getWriter().print("send");
+			}
+			else {
+			response.getWriter().print("Failed to send OTP ! please try again.");
+			}
+		return;
 	}
+
+
 }

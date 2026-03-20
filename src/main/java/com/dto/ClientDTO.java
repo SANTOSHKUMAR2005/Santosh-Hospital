@@ -5,16 +5,16 @@ public class ClientDTO {
 	private int client_id;
 	private String client_Username;
 	private String password;
-	private String client_Phone;
+	private String client_email;
 
 	public ClientDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ClientDTO( String client_Username, String password, String client_Phone) {
+	public ClientDTO( String client_Username, String password, String client_email) {
 		this.client_Username = client_Username;
 		this.password = password;
-		this.client_Phone = client_Phone;
+		this.client_email = client_email;
 	}
 
 	public int getClient_id() {
@@ -41,12 +41,12 @@ public class ClientDTO {
 		this.password = password;
 	}
 
-	public String getClient_Phone() {
-		return client_Phone;
+	public String getClient_email() {
+		return client_email;
 	}
 
-	public void setClient_Phone(String client_Phone) {
-		this.client_Phone = client_Phone;
+	public void setClient_Phone(String client_email) {
+		this.client_email = client_email;
 	}
 
 	

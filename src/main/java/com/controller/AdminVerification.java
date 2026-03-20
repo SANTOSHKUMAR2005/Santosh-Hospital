@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 import com.dao.AdminDAOImp;
+import com.dao.OtpDao;
+import com.dao.OtpDao.Otp;
+import com.helper.EmailService;
 
 
 @WebServlet(
@@ -24,39 +27,41 @@ public class AdminVerification extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=(String)request.getParameter("username");
+		String adminName=(String)request.getParameter("adminName");
 		String password=(String)request.getParameter("password");
-		String phone=(String)request.getParameter("phone");
+		String email=(String)request.getParameter("email");
 		
-		if(phone.charAt(0)=='+') {
-			phone=(phone.substring(3,phone.length())).trim();
-		}
 		
 		AdminDAOImp adminDAOImp=new  AdminDAOImp();
-		String status = adminDAOImp.varifyAdmin(username,password,phone);
-		
-		HttpSession session = request.getSession();
+		String status = adminDAOImp.varifyAdmin(adminName,password,email);
 		
 		if(status.equals("valied")) {
-			session.setAttribute("admin",username);
-			//setting inactive duration for one day
-			session.setMaxInactiveInterval(60*24*60);
 			
-			//sending OTP on given number
-			String otp=SendOTPServlet.generateOTP();
-			
-		//	boolean OTPStatus= SendOTP(phone,otp);
-			boolean OTPStatus = true;
-			if (OTPStatus) {
-				session.setAttribute("otp", otp);
-				session.setAttribute("otpTime", System.currentTimeMillis());
-				System.out.println(otp);
-				response.setContentType("text/plain");
-				response.getWriter().print("send");
-			} else {
-				response.getWriter().print("failed to send OTP. Please try Again");
+			Otp otpObj = OtpDao.getOtpByEmail(email);
+			if(otpObj!=null){
+				long generatedTime = otpObj.generatedTime;
+				long diff=System.currentTimeMillis()-generatedTime;
+				if(diff<300000) {
+					response.getWriter().print("sended");
+					return;
+				}else {
+					OtpDao.deleteOtp(email);
+				}	
 			}
+
+			    String otp = EmailService.generateOTP();
 			
+				if(EmailService.sendOtp(email, otp)) {
+				
+				    OtpDao.saveOtp(email, adminName, otp, System.currentTimeMillis());
+				
+				    response.setContentType("text/plain");
+				    response.getWriter().print("send");
+				}
+				else {
+				response.getWriter().print("Failed to send OTP ! please try again.");
+				}
+			return;			
 		}else {
 			response.getWriter().print("Invalied Cridentials");
 		}

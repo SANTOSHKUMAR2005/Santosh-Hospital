@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="css-files/footer.css">
 </head>
 <body>
-	
 	<% 
 	if ( session.getAttribute("StatusMsg") != null) {
 	%>
@@ -24,16 +23,11 @@
 	}
 	%>
 	
-
 	<%@include file="/WEB-INF/view/html-files/header.html" %>
 	
 	<div id="menuIcon" class="fa-solid fa-bars" ></div>
-
-    
-
-
 	
-	
+
 	
 	<nav class="navbar">
 		<a href="#home">Home</a> 

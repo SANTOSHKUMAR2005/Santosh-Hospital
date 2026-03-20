@@ -14,6 +14,10 @@
 </head>
 <body>
 
+  <%@ include file="html-files/header.html"%>
+    
+    <div id="menuIcon" class="fa-solid fa-bars"></div>
+    
 	<%
 	if (session != null && session.getAttribute("StatusMsg") != null) {
 	%>
@@ -23,9 +27,6 @@
 	}
 	%>
 	
-	<div id="menuIcon" class="fa-solid fa-bars"></div>
-
-	<%@ include file="html-files/header.html"%>
 
 	<!--  protecting from Unauthorized access -->
 	<%
@@ -179,8 +180,8 @@
 							required="required"></td>
 					</tr>
 					<tr>
-						<th><label for="phone">phone no. : </label></th>
-						<td><input type="tel" id="phone" name="phone"></td>
+						<th><label for="email">Email : </label></th>
+						<td><input type="email" id="email" name="email"></td>
 					</tr>
 				</table>
 				<input type="submit" value="Add">

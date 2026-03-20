@@ -9,45 +9,63 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import com.dao.OtpDao;
+import com.dao.OtpDao.Otp;
+
 /**
  * Servlet implementation class VerifyOTPServlet
  */
 @WebServlet("/verifyOTP")
 public class VerifyOTPServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		long otpTime=(Long)session.getAttribute("otpTime");
-	   long currentTime = System.currentTimeMillis();
-	   if((currentTime-otpTime)>150000) {
-		   response.getWriter().print("OTP expired");
-		   return;
-	   }
-		
-		String originalOTP=(String)session.getAttribute("otp");
-		String enteredOTP=request.getParameter("otp");
-		if(originalOTP.equals(enteredOTP)) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String email = request.getParameter("email");
+		Otp otpObj = OtpDao.getOtpByEmail(email);
+		if (otpObj != null) {
+
+			long OtpgeneratedTime = otpObj.generatedTime;
+
+			long currentTime = System.currentTimeMillis();
+			if ((currentTime - OtpgeneratedTime) > 300000) {
+				OtpDao.deleteOtp(email);
+				response.getWriter().print("OTP expired");
+				return;
+			}
 			
-			session.removeAttribute("otp");
-			session.removeAttribute("otpTime");
+            String userOTP=request.getParameter("otp");
+			if(!userOTP.equals(otpObj.otp)) {
+				response.getWriter().print("Invalied OTP");
+				return;
+			}
 			
+			 OtpDao.deleteOtp(email);
+				
+				// checking for admin
+				String admin = request.getParameter("adminName");
+				if (admin != null) {
+					HttpSession session = request.getSession();
+					session.setAttribute("admin", admin);
+					session.setMaxInactiveInterval(60 * 24 * 60);
+				}
+
+				response.setContentType("text/plain");
+				response.getWriter().print("verified");
 			
-			response.setContentType("text/plain");
-			response.getWriter().print("verified");
-		}else {
-			response.getWriter().print("Invalied OTP");
+
+		} else {
+			response.getWriter().print("Illegal Action ! This can couse trouble for you.");
 		}
 	}
-
 }

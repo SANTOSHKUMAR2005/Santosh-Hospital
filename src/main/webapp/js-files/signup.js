@@ -20,14 +20,14 @@ let timerId;
 
 function runTimer() {
     timerId = setInterval(function() {
-        timer.innerText = time;
+        timer.innerText = Math.floor(time/60 )+" : "+time%60;
         time--;
         if (time < 0) {
             timer.classList.add('nn');
             document.querySelector('#OTPSection').classList.add('nn');
             document.querySelector('#sendOTP').style.display = 'inline';
             document.querySelector('#username').disabled = false;
-            document.querySelector("#phoneNo").disabled = false;
+            document.querySelector("#email").disabled = false;
             clearInterval(timerId);
         }
     }, 1000)
@@ -48,41 +48,50 @@ document.addEventListener('click', (e) => {
 
 function sendOTP(e) {
     let username = document.querySelector('#username').value.trim();
-    let phone = document.querySelector('#phoneNo').value.trim();
-    if (username != "" && phone != "") {
-        if (phone.length != 10) {
-            notificationMsg.innerText = "enter valid phone number";
+    let email = document.querySelector('#email').value.trim();
+    if (username != "" && email != "") {
+        if (email.includes('@') && email.includes('.') ) {
+			
+			fetch("sendOTPServlet", {
+			    method: "post",
+			    headers: { "Content-type": "application/x-www-form-urlencoded" },
+			    body: "username=" + username + "&email=" + email
+			}).then(res => res.text()).then(data => {
+			    if (data != null && data == "send") {
+					
+					notificationMsg.innerText ="OTP hash been sent to Email : "+email +"." +
+					                           " Please check Spam folder also. ";
+					
+	                document.querySelector('#OTPSection').classList.remove('nn');
+			        document.querySelector('#username').disabled = true;
+			        document.querySelector("#email").disabled = true;
+			        e.target.style.display = 'none';
+			        time = 300;
+			        runTimer();
+			        timer.classList.remove('nn');
+			    } else if(data != null && data == "sended"){
+					notificationMsg.innerText ="OTP all ready sended on your email. please check your email or try after some time. ";
+					document.querySelector('#OTPSection').classList.remove('nn');
+					document.querySelector('#username').disabled = true;
+					document.querySelector("#email").disabled = true;
+					e.target.style.display = 'none';
+				}
+				else {
+			        notificationMsg.innerText = data;
+			        documen.querySelector('#sendOTP').style.display = "inline";
+			    }
+			})
+
         }
         else {
-            fetch("sendOTPServlet", {
-                method: "post",
-                headers: { "Content-type": "application/x-www-form-urlencoded" },
-                body: "username=" + username + "&phone=" + phone
-            }).then(res => res.text()).then(data => {
-                if (data != null && data == "send") {
-					
-					notificationMsg.innerText ="OTP sent to phone no. "+phone;
-					
-                    document.querySelector('#OTPSection').classList.remove('nn');
-                    document.querySelector('#username').disabled = true;
-                    document.querySelector("#phoneNo").disabled = true;
-                    e.target.style.display = 'none';
-                    time = 60;
-                    runTimer();
-                    timer.classList.remove('nn');
-                } else {
-                    notificationMsg.innerText = data;
-                    documen.querySelector('#sendOTP').style.display = "inline";
-                }
-            })
+			notificationMsg.innerText = "enter valid Email address";
         }
     }
     else {
-        notificationMsg.innerText = "username or pnone no should not be null";
+        notificationMsg.innerText = "username or Email  should not be empty";
     }
-
+	notificationBox.classList.add("notificationBox");
     notificationBox.classList.remove("nn");
-    notificationBox.classList.add("notificationBox");
     closeAfter();
 
 }
@@ -90,11 +99,15 @@ function sendOTP(e) {
 function verifyOTP() {
     let otp = document.querySelector('#otp').value.trim();
     if (otp.length == 6) {
-
+		
+		document.querySelector("#email").disabled = false;
+		let email = document.querySelector('#email').value.trim();
+		document.querySelector("#email").disabled = true;
+		
         fetch("verifyOTP", {
             method: "post",
             headers: { "Content-type": "application/x-www-form-urlencoded" },
-            body: "otp=" + otp
+            body: "otp=" + otp + "&email="+email
         }).then(res => res.text()).then(data => {
             if (data == "verified") {
 
@@ -128,27 +141,27 @@ function SignIn() {
         notificationMsg.innerText = "password should have at least 6 digit";
     }
     else if (confirmPass != password) {
-        notificationMsg.innerText = "confirm password not matched with original password .";
+        notificationMsg.innerText = "Password not matched.";
     } else {
 
         let username = document.querySelector('#username');
-        let phone = document.querySelector("#phoneNo");
+        let email = document.querySelector("#email");
         username.disabled = false;
-        phone.disabled = false;
+        email.disabled = false;
 
-        username = username.value.trim();
-        phone = phone.value.trim();
+        let usernameVal = username.value.trim();
+        let emailVal = email.value.trim();
 
         fetch("Signup", {
             method: "post",
             headers: { "Content-type": "application/x-www-form-urlencoded" },
-            body: "username=" + username + "&password=" + password + "&phone=" + phone
+            body: "username=" + usernameVal + "&password=" + password + "&email=" + emailVal
         }).then(res => res.text()).then(data => {
             if (data == "successful") {
                 notificationMsg.innerText = "you have singned up successfylly : login now";
 				setTimeout(()=>{
 					window.location.href = "login";
-				} , 1500);
+				} , 2000);
             } else {
                 notificationMsg.innerText = data;
             }

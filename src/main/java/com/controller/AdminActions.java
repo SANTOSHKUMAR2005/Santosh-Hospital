@@ -86,8 +86,8 @@ public class AdminActions extends HttpServlet {
 			  AdminDAO adminDao=new AdminDAOImp();
 			  String name= (String)request.getParameter("AdminName");
 			  String pass=(String)request.getParameter("pass");
-			  String phone=(String)request.getParameter("phone");
-			  statusMsg=adminDao.addAdmin(new AdminDTO(name,pass,phone));
+			  String email=(String)request.getParameter("email");
+			  statusMsg=adminDao.addAdmin(new AdminDTO(name,pass,email));
 			  session.setAttribute("StatusMsg", statusMsg);
 		  }
           
